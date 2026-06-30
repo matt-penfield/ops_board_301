@@ -286,6 +286,182 @@ tbody tr:hover { background: var(--surface-alt); }
   z-index: 1;
 }
 
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 24px;
+  overflow-y: auto;
+}
+.modal-overlay.open {
+  display: flex;
+}
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 900px;
+  padding: 32px;
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background .15s, color .15s;
+}
+.modal-close:hover { background: var(--surface-alt); color: var(--text); }
+.modal-close .material-symbols-outlined { font-size: 20px; }
+
+.modal-content h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.modal-content .modal-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+.modal-content h3 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  margin: 24px 0 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.modal-content h3:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+.modal-content p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.modal-content .metrics-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.modal-content .metrics-list li {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.modal-content .metrics-list li::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Modal tables */
+.modal-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.modal-content thead th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.modal-content tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.modal-content tbody tr:last-child td { border-bottom: none; }
+.modal-content tbody tr:hover { background: var(--surface-alt); }
+
+/* Platform & contacts */
+.modal-content .platform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+.modal-content .platform-item {
+  background: var(--surface-alt);
+  border-radius: 8px;
+  padding: 12px;
+}
+.modal-content .platform-item strong {
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+.modal-content .platform-item span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.modal-content .contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+.modal-content .contact-group {
+  background: var(--surface-alt);
+  border-radius: 8px;
+  padding: 12px;
+}
+.modal-content .contact-group strong {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+.modal-content .contact-group ul {
+  list-style: none;
+  padding: 0;
+}
+.modal-content .contact-group li {
+  font-size: 12px;
+  padding: 2px 0;
+}
+.modal-content .contact-role {
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.kanban-card { cursor: pointer; transition: border-color .15s; }
+.kanban-card:hover { border-color: var(--accent); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
@@ -293,9 +469,13 @@ tbody tr:hover { background: var(--surface-alt); }
   .kanban { grid-template-columns: repeat(2, 1fr); }
   nav { padding: 14px 16px; }
   main { padding: 20px 16px; }
+  .modal-content .platform-grid { grid-template-columns: 1fr; }
+  .modal-content .contacts-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
   .kanban { grid-template-columns: 1fr; }
   .nav-tabs button span:not(.material-symbols-outlined) { display: none; }
+  .modal { padding: 20px; }
+  .modal-overlay { padding: 20px 12px; }
 }

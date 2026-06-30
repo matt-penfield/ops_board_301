@@ -57,7 +57,7 @@ High-level health indicators across all domains. Traffic-light status for capaci
 Capacity and allocation detail. Per-designer workload bars, sprint commitments, and availability calendar. Enables rebalancing decisions.
 
 ### 3. Project Pipeline
-Filterable list or kanban of active design work. Columns by status, sortable by age/priority/requester. Surfaces blockers and SLA breaches.
+Filterable list or kanban of active design work. Columns by status, sortable by age/priority/requester. Surfaces blockers and SLA breaches. Each project card is clickable to surface details.
 
 ### 4. System Health
 Design system metrics: adoption trends, debt backlog, recent contributions. Helps prioritize system investment.

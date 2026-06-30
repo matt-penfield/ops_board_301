@@ -88,7 +88,7 @@ cols.forEach(col => {
   const items = pipelineData[col.key];
   let html = `<div class="kanban-col"><h3>${col.label} <span class="count">${items.length}</span></h3>`;
   items.forEach(item => {
-    html += `<div class="kanban-card">
+    html += `<div class="kanban-card" data-project="${item.title}">
       <div class="kc-title">${item.title}</div>
       <div class="kc-meta">${item.meta} · ${item.days}d</div>
       ${item.blocked ? `<div class="kc-blocked"><span class="material-symbols-outlined">error</span>${item.blocked}</div>` : ''}
@@ -146,4 +146,341 @@ adoptionData.forEach(d => {
       <div style="width:100%;height:${barH}px;background:var(--accent);border-radius:6px 6px 0 0;opacity:${0.4 + (d.value - 70) * 0.035}"></div>
       <span style="font-size:11px;color:var(--text-muted)">${d.month}</span>
     </div>`;
+});
+
+// ── PROJECT DETAIL DATA ──
+const projectDetails = {
+  'Checkout redesign': {
+    overview: 'Redesign the end-to-end checkout experience to reduce cart abandonment and improve conversion. The project focuses on streamlining the multi-step flow into a single-page layout with progressive disclosure.',
+    goal: 'Reduce checkout drop-off rate by 20% and decrease average time-to-purchase by 30 seconds.',
+    metrics: ['Cart abandonment rate', 'Time to complete purchase', 'Error rate on payment step', 'Mobile conversion lift'],
+    raid: [
+      { issue: 'Payment API migration', desc: 'Backend team migrating to new payment processor mid-sprint. May affect field validation specs.', severity: 'High', mitigation: 'Coordinate with eng lead weekly. Design flexible validation patterns that work with both APIs. Fallback to current flow if migration delayed.', logged: '2026-06-10', needed: '2026-06-20', resolved: '2026-06-22', owner: 'Alex Chen' },
+      { issue: 'Address autocomplete latency', desc: 'Third-party address service has 800ms+ response times on mobile networks.', severity: 'Medium', mitigation: 'Design skeleton loading state for address fields. Provide manual entry fallback that doesn\'t block progression.', logged: '2026-06-15', needed: '2026-07-01', resolved: '', owner: 'Alex Chen' },
+    ],
+    decisions: [
+      { name: 'Single-page checkout approved', desc: 'Moved from 4-step wizard to single scrollable page with sticky order summary.', artifacts: 'FigJam: Checkout Flow Map v3, Figma: Checkout Single-Page Comp', needed: '2026-06-08', resolved: '2026-06-09', owner: 'Taylor Kim (PM)' },
+      { name: 'Guest checkout prioritized over account creation', desc: 'Account creation moved to post-purchase confirmation screen to reduce friction.', artifacts: 'PRD: Checkout Requirements v2.1, FigJam: User Journey Decision Tree', needed: '2026-06-12', resolved: '2026-06-14', owner: 'VP Product' },
+    ],
+    platforms: { design: 'Figma (design), FigJam (workshops & flows)', research: 'Maze (unmoderated testing), Dovetail (insights repository)', engineering: 'React, Next.js, Stripe Elements SDK' },
+    contacts: {
+      ux: [{ name: 'Alex Chen', role: 'Lead Designer' }, { name: 'Priya Sharma', role: 'UX Support' }],
+      engineering: [{ name: 'Navid Rahimi', role: 'Frontend Lead' }, { name: 'Jordan Lee', role: 'Backend — Payments' }],
+      pm: [{ name: 'Taylor Kim', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'VP Product', role: 'Final approver' }, { name: 'Taylor Kim', role: 'Day-to-day decisions' }],
+    },
+  },
+  'Onboarding flow v2': {
+    overview: 'Revamp the new-user onboarding to improve activation rates. Introduce progressive profiling and contextual feature tours instead of the current static walkthrough.',
+    goal: 'Increase 7-day activation rate from 34% to 50% and reduce support tickets from new users by 25%.',
+    metrics: ['7-day activation rate', 'Onboarding completion rate', 'Time to first key action', 'New user support ticket volume'],
+    raid: [
+      { issue: 'Feature flag dependency', desc: 'New onboarding requires feature flag system that eng is still building.', severity: 'Medium', mitigation: 'Design both flagged and unflagged states. Work with eng to confirm flag system timeline. Prepare phased rollout plan.', logged: '2026-06-12', needed: '2026-07-05', resolved: '', owner: 'Priya Sharma' },
+      { issue: 'Content not finalized', desc: 'Marketing copy for tour steps still pending brand review.', severity: 'Low', mitigation: 'Use placeholder copy for design reviews. Flag to marketing lead for priority.', logged: '2026-06-18', needed: '2026-06-28', resolved: '2026-06-26', owner: 'Priya Sharma' },
+    ],
+    decisions: [
+      { name: 'Progressive profiling over single form', desc: 'Collect user info across first 3 sessions rather than upfront.', artifacts: 'FigJam: Onboarding Strategy Board, Figma: Progressive Profiling Flows', needed: '2026-06-05', resolved: '2026-06-06', owner: 'Taylor Kim (PM)' },
+    ],
+    platforms: { design: 'Figma (design), FigJam (journey mapping)', research: 'UserTesting (moderated sessions), Hotjar (heatmaps)', engineering: 'React, LaunchDarkly (feature flags)' },
+    contacts: {
+      ux: [{ name: 'Priya Sharma', role: 'Lead Designer' }],
+      engineering: [{ name: 'Sam Torres', role: 'Frontend' }, { name: 'Lin Wei', role: 'Backend' }],
+      pm: [{ name: 'Taylor Kim', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Dir. of Growth', role: 'Approver' }],
+    },
+  },
+  'Mobile nav patterns': {
+    overview: 'Establish a unified mobile navigation pattern to replace inconsistent tab bars and hamburger menus across the app. Define a scalable system that accommodates 5–8 top-level sections.',
+    goal: 'Unify mobile navigation into a single pattern adopted across all app sections, reducing navigation-related user errors by 40%.',
+    metrics: ['Navigation error rate', 'Task completion rate on mobile', 'Cross-section discoverability score', 'System Usability Scale improvement'],
+    raid: [
+      { issue: 'iOS and Android divergence', desc: 'Platform conventions differ for bottom nav behavior (iOS) vs drawer (Android).', severity: 'Medium', mitigation: 'Design platform-adaptive variants. Document decision criteria for when to diverge. Review with eng leads for feasibility.', logged: '2026-06-14', needed: '2026-06-28', resolved: '', owner: 'Alex Chen' },
+    ],
+    decisions: [
+      { name: 'Bottom tab bar as primary pattern', desc: 'Adopted bottom tabs for top 5 destinations with overflow "More" tab for secondary items.', artifacts: 'Figma: Mobile Nav Explorations v4, FigJam: Nav Audit & Decision', needed: '2026-06-16', resolved: '2026-06-18', owner: 'Alex Chen' },
+    ],
+    platforms: { design: 'Figma (components & specs)', research: 'Maze (tree testing), Lookback (usability sessions)', engineering: 'React Native, iOS UIKit, Android Jetpack Compose' },
+    contacts: {
+      ux: [{ name: 'Alex Chen', role: 'Lead Designer' }],
+      engineering: [{ name: 'Chris Park', role: 'Mobile Lead' }, { name: 'Aisha Patel', role: 'iOS' }],
+      pm: [{ name: 'Marco Silva', role: 'Mobile PM' }],
+      decisionMakers: [{ name: 'Head of Mobile', role: 'Final approver' }],
+    },
+  },
+  'Dashboard v2 layouts': {
+    overview: 'Redesign the main analytics dashboard to support customizable widget layouts, improved data density, and better scan-ability for power users.',
+    goal: 'Increase daily active usage of the dashboard by 35% and reduce time-to-insight for key metrics by 50%.',
+    metrics: ['Dashboard DAU', 'Avg. session duration', 'Widget interaction rate', 'Time to first insight'],
+    raid: [
+      { issue: 'Data API performance', desc: 'Current API cannot support real-time widget updates at proposed refresh rate.', severity: 'High', mitigation: 'Design graceful loading states. Propose tiered refresh rates by widget priority. Coordinate with backend on caching strategy.', logged: '2026-06-08', needed: '2026-06-25', resolved: '', owner: 'James Okafor' },
+      { issue: 'Accessibility for drag-and-drop', desc: 'Widget rearrangement via drag-drop needs keyboard-accessible alternative.', severity: 'Medium', mitigation: 'Design an "Edit layout" mode with arrow-key reordering. Test with screen reader users in next research sprint.', logged: '2026-06-16', needed: '2026-07-10', resolved: '', owner: 'James Okafor' },
+    ],
+    decisions: [
+      { name: 'Grid-based layout system', desc: 'Adopted 12-column responsive grid with predefined widget size presets (1x1, 2x1, 2x2).', artifacts: 'Figma: Dashboard Grid System, PRD: Dashboard v2 Requirements', needed: '2026-06-10', resolved: '2026-06-12', owner: 'James Okafor' },
+    ],
+    platforms: { design: 'Figma (design system + prototypes)', research: 'Maze (prototype testing), FullStory (session replay)', engineering: 'React, D3.js, GraphQL' },
+    contacts: {
+      ux: [{ name: 'James Okafor', role: 'Lead Designer' }],
+      engineering: [{ name: 'Navid Rahimi', role: 'Frontend Lead' }, { name: 'Dana Kim', role: 'Data Viz' }],
+      pm: [{ name: 'Rachel Hong', role: 'Analytics PM' }],
+      decisionMakers: [{ name: 'CPO', role: 'Executive sponsor' }, { name: 'Rachel Hong', role: 'Day-to-day' }],
+    },
+  },
+  'Settings page cleanup': {
+    overview: 'Restructure the settings page from a single long-scroll layout to categorized sections with improved information architecture and clearer labeling.',
+    goal: 'Reduce settings-related support tickets by 30% and improve findability score to above 80% in tree testing.',
+    metrics: ['Support tickets (settings category)', 'Tree test findability', 'Task success rate', 'Time on page'],
+    raid: [
+      { issue: 'Waiting on API spec', desc: 'New notification preferences require a backend API that has not been specified yet.', severity: 'High', mitigation: 'Design with assumed data model. Flag to eng lead weekly. Scope notification prefs as Phase 2 if API delayed beyond sprint 15.', logged: '2026-06-10', needed: '2026-06-24', resolved: '', owner: 'James Okafor' },
+    ],
+    decisions: [
+      { name: 'Tab-based categorization', desc: 'Settings divided into Profile, Notifications, Security, and Integrations tabs.', artifacts: 'FigJam: IA Card Sort Results, Figma: Settings Tabs Exploration', needed: '2026-06-08', resolved: '2026-06-10', owner: 'James Okafor' },
+    ],
+    platforms: { design: 'Figma (specs & prototypes)', research: 'Optimal Workshop (tree testing & card sort)', engineering: 'React, REST API' },
+    contacts: {
+      ux: [{ name: 'James Okafor', role: 'Lead Designer' }],
+      engineering: [{ name: 'Jordan Lee', role: 'Backend' }, { name: 'Sam Torres', role: 'Frontend' }],
+      pm: [{ name: 'Taylor Kim', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Taylor Kim', role: 'Approver' }],
+    },
+  },
+  'Search results page': {
+    overview: 'Redesign search results to support faceted filtering, better result previews, and relevance tuning controls for users.',
+    goal: 'Improve search-to-click-through rate by 25% and reduce "no results" dead-ends by 40%.',
+    metrics: ['Search CTR', 'No-results rate', 'Filter usage rate', 'Avg. results position clicked'],
+    raid: [
+      { issue: 'Elasticsearch index limitations', desc: 'Current index doesn\'t support some proposed facets without reindexing.', severity: 'Medium', mitigation: 'Prioritize facets that work with current index. Queue advanced facets for Phase 2 after reindex scheduled Q3.', logged: '2026-06-20', needed: '2026-07-05', resolved: '', owner: 'Sara Müller' },
+    ],
+    decisions: [
+      { name: 'Left-rail filter panel', desc: 'Filters shown in persistent left rail on desktop, bottom sheet on mobile.', artifacts: 'Figma: Search Results Desktop + Mobile, FigJam: Filter Taxonomy', needed: '2026-06-18', resolved: '2026-06-19', owner: 'Sara Müller' },
+    ],
+    platforms: { design: 'Figma (comps & interaction specs)', research: 'Maze (A/B prototype test), FullStory (search behavior analysis)', engineering: 'React, Elasticsearch, Algolia (under evaluation)' },
+    contacts: {
+      ux: [{ name: 'Sara Müller', role: 'Lead Designer' }],
+      engineering: [{ name: 'Lin Wei', role: 'Search Backend' }, { name: 'Chris Park', role: 'Frontend' }],
+      pm: [{ name: 'Marco Silva', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Marco Silva', role: 'Approver' }],
+    },
+  },
+  'Notification center': {
+    overview: 'Build a centralized notification center to unify in-app alerts, system messages, and activity updates into a single accessible panel.',
+    goal: 'Consolidate 4 separate notification surfaces into 1, and achieve 60%+ weekly engagement with the notification panel.',
+    metrics: ['Panel open rate', 'Notification click-through', 'Notification dismissal rate', 'Time to action from notification'],
+    raid: [
+      { issue: 'Notification fatigue risk', desc: 'Consolidating all channels may overwhelm users with volume.', severity: 'Medium', mitigation: 'Design smart grouping and priority tiers. Include "quiet hours" controls. Run preference survey before launch.', logged: '2026-06-14', needed: '2026-07-01', resolved: '', owner: 'Dan Reeves' },
+    ],
+    decisions: [
+      { name: 'Slide-over panel (not full page)', desc: 'Notifications appear in a slide-over panel from the right to maintain context of current page.', artifacts: 'Figma: Notification Panel Concepts, FigJam: Notification Architecture', needed: '2026-06-12', resolved: '2026-06-13', owner: 'Dan Reeves' },
+    ],
+    platforms: { design: 'Figma (component library + specs)', research: 'Surveys (Typeform), Dovetail (synthesis)', engineering: 'React, WebSocket, Firebase Cloud Messaging' },
+    contacts: {
+      ux: [{ name: 'Dan Reeves', role: 'Lead Designer' }],
+      engineering: [{ name: 'Aisha Patel', role: 'Frontend' }, { name: 'Jordan Lee', role: 'Backend — Events' }],
+      pm: [{ name: 'Rachel Hong', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Rachel Hong', role: 'Approver' }],
+    },
+  },
+  'Data export wizard': {
+    overview: 'Design a guided export wizard allowing users to select data sets, configure formats, schedule recurring exports, and preview results before downloading.',
+    goal: 'Enable self-service data export for 80% of use cases currently handled by support tickets.',
+    metrics: ['Self-service export completion rate', 'Export-related support tickets', 'Wizard abandonment rate', 'Scheduled export adoption'],
+    raid: [
+      { issue: 'Large dataset timeout', desc: 'Exports over 100k rows timeout in the current architecture.', severity: 'High', mitigation: 'Design async export with email notification when ready. Add progress indicator and estimated time. Coordinate with eng on background job queue.', logged: '2026-06-11', needed: '2026-06-28', resolved: '', owner: 'Luca Bianchi' },
+    ],
+    decisions: [
+      { name: 'Step-by-step wizard over single form', desc: 'Adopted 4-step wizard: Select Data → Configure Format → Schedule → Preview & Export.', artifacts: 'Figma: Export Wizard Flow, PRD: Data Export Requirements v1.2', needed: '2026-06-09', resolved: '2026-06-11', owner: 'Luca Bianchi' },
+    ],
+    platforms: { design: 'Figma (flow + interaction specs)', research: 'UserTesting (task-based sessions)', engineering: 'React, Node.js, AWS S3 (export storage)' },
+    contacts: {
+      ux: [{ name: 'Luca Bianchi', role: 'Lead Designer' }],
+      engineering: [{ name: 'Dana Kim', role: 'Full-stack' }, { name: 'Lin Wei', role: 'Backend' }],
+      pm: [{ name: 'Rachel Hong', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Dir. of Engineering', role: 'Technical approver' }],
+    },
+  },
+  'Profile edit flow': {
+    overview: 'Improve the profile editing experience with inline editing, better avatar upload, and real-time validation feedback.',
+    goal: 'Increase profile completion rate from 45% to 70% and reduce save-error occurrences by 50%.',
+    metrics: ['Profile completion rate', 'Save error rate', 'Avg. fields completed', 'Avatar upload rate'],
+    raid: [
+      { issue: 'Image processing pipeline', desc: 'Avatar crops and resizes need server-side processing with size limits.', severity: 'Low', mitigation: 'Design client-side crop tool with clear size guidance. Show processing state during upload.', logged: '2026-06-22', needed: '2026-07-08', resolved: '', owner: 'Kim Tanaka' },
+    ],
+    decisions: [
+      { name: 'Inline edit mode', desc: 'Users edit fields directly on the profile page rather than navigating to a separate form.', artifacts: 'Figma: Profile Inline Edit States', needed: '2026-06-20', resolved: '2026-06-21', owner: 'Kim Tanaka' },
+    ],
+    platforms: { design: 'Figma (interaction specs)', research: 'Hotjar (session recordings)', engineering: 'React, Cloudinary (image processing)' },
+    contacts: {
+      ux: [{ name: 'Kim Tanaka', role: 'Lead Designer' }],
+      engineering: [{ name: 'Sam Torres', role: 'Frontend' }],
+      pm: [{ name: 'Taylor Kim', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Taylor Kim', role: 'Approver' }],
+    },
+  },
+  'Alert system design': {
+    overview: 'Design a flexible alert system for system-wide announcements, maintenance windows, and urgent user-facing warnings with dismissal and escalation patterns.',
+    goal: 'Provide a consistent alert framework that reduces ad-hoc banner implementations and ensures critical messages reach 95%+ of active users.',
+    metrics: ['Alert visibility rate', 'Dismissal rate by type', 'Time to action on critical alerts', 'Dev implementation time for new alert types'],
+    raid: [
+      { issue: 'Alert hierarchy conflicts', desc: 'Multiple simultaneous alerts may compete for attention in the same viewport region.', severity: 'Medium', mitigation: 'Design stacking/priority rules. Maximum 2 visible alerts; queue lower-priority. Document hierarchy in design system.', logged: '2026-06-18', needed: '2026-07-02', resolved: '', owner: 'Dan Reeves' },
+    ],
+    decisions: [
+      { name: 'Three-tier severity model', desc: 'Alerts categorized as Info, Warning, and Critical with distinct visual treatments and dismissal rules.', artifacts: 'Figma: Alert Component Library, FigJam: Alert Taxonomy Workshop', needed: '2026-06-15', resolved: '2026-06-17', owner: 'Dan Reeves' },
+    ],
+    platforms: { design: 'Figma (design system components)', research: 'Heuristic review, competitive audit', engineering: 'React, Design System (Storybook)' },
+    contacts: {
+      ux: [{ name: 'Dan Reeves', role: 'Lead Designer' }],
+      engineering: [{ name: 'Navid Rahimi', role: 'Frontend Lead' }],
+      pm: [{ name: 'Rachel Hong', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Dir. of Engineering', role: 'Approver' }],
+    },
+  },
+  'Permissions matrix': {
+    overview: 'Design a role-based permissions management interface allowing admins to configure granular access controls across workspace features.',
+    goal: 'Replace the current binary admin/member model with flexible role-based access, reducing permission-related escalations by 60%.',
+    metrics: ['Permission escalation tickets', 'Role configuration time', 'Admin self-service rate', 'Incorrect permission incidents'],
+    raid: [
+      { issue: 'Dependency on IAM team', desc: 'The identity and access management team hasn\'t finalized the role schema that this UI depends on.', severity: 'High', mitigation: 'Design against proposed schema with flexibility for changes. Attend IAM weekly syncs. Identify minimum viable role set to unblock design.', logged: '2026-06-08', needed: '2026-06-20', resolved: '', owner: 'Dan Reeves' },
+    ],
+    decisions: [
+      { name: 'Matrix view for permissions', desc: 'Adopted a role × feature matrix view with toggle controls, replacing a list-based approach.', artifacts: 'Figma: Permissions Matrix Explorations, FigJam: Admin Needs Workshop', needed: '2026-06-06', resolved: '2026-06-08', owner: 'Dan Reeves' },
+    ],
+    platforms: { design: 'Figma (complex table interactions)', research: 'Admin user interviews (Dovetail)', engineering: 'React, Custom IAM API (in development)' },
+    contacts: {
+      ux: [{ name: 'Dan Reeves', role: 'Lead Designer' }],
+      engineering: [{ name: 'Jordan Lee', role: 'IAM Backend' }, { name: 'Navid Rahimi', role: 'Frontend' }],
+      pm: [{ name: 'Marco Silva', role: 'Platform PM' }],
+      decisionMakers: [{ name: 'CISO', role: 'Security approver' }, { name: 'Marco Silva', role: 'Product approver' }],
+    },
+  },
+  'Filter panel redesign': {
+    overview: 'Redesign the global filter panel to support saved filter presets, better multi-select interactions, and clear active-filter visibility.',
+    goal: 'Increase filter usage by 40% and reduce time to apply complex filter combinations by 50%.',
+    metrics: ['Filter usage rate', 'Time to apply filters', 'Saved preset adoption', 'Filter reset rate'],
+    raid: [
+      { issue: 'PM unavailable for review', desc: 'Product manager on leave until next week, blocking approval of filter taxonomy.', severity: 'Medium', mitigation: 'Proceed with design based on existing requirements. Schedule review for first day PM returns. Identify backup approver for urgent decisions.', logged: '2026-06-20', needed: '2026-06-27', resolved: '', owner: 'Sara Müller' },
+    ],
+    decisions: [
+      { name: 'Persistent filter bar with expandable panel', desc: 'Active filters shown as chips in a persistent bar; full panel expands on interaction.', artifacts: 'Figma: Filter Panel v3, FigJam: Filter Interaction Patterns', needed: '2026-06-14', resolved: '2026-06-16', owner: 'Sara Müller' },
+    ],
+    platforms: { design: 'Figma (interaction prototypes)', research: 'Maze (A/B concept test), FullStory (current filter behavior)', engineering: 'React, URL state management' },
+    contacts: {
+      ux: [{ name: 'Sara Müller', role: 'Lead Designer' }],
+      engineering: [{ name: 'Chris Park', role: 'Frontend' }],
+      pm: [{ name: 'Marco Silva', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Marco Silva', role: 'Approver' }],
+    },
+  },
+};
+
+// Fallback for projects without detailed data
+function getProjectDetail(title) {
+  if (projectDetails[title]) return projectDetails[title];
+  return {
+    overview: 'Project details are being compiled. Check back soon for full overview and tracking information.',
+    goal: 'Goal documentation in progress.',
+    metrics: ['To be defined'],
+    raid: [],
+    decisions: [],
+    platforms: { design: 'Figma', research: 'TBD', engineering: 'TBD' },
+    contacts: {
+      ux: [{ name: 'Unassigned', role: '' }],
+      engineering: [{ name: 'Unassigned', role: '' }],
+      pm: [{ name: 'Unassigned', role: '' }],
+      decisionMakers: [{ name: 'TBD', role: '' }],
+    },
+  };
+}
+
+// ── MODAL LOGIC ──
+const modal = document.getElementById('project-modal');
+const modalContent = document.getElementById('modal-content');
+const modalClose = document.getElementById('modal-close');
+
+function openProjectModal(title) {
+  const d = getProjectDetail(title);
+  let html = `<h2>${title}</h2><p class="modal-subtitle">Project Overview</p>`;
+
+  // Overview & Goal
+  html += `<h3>Overview & Primary Goal</h3>`;
+  html += `<p>${d.overview}</p>`;
+  html += `<p><strong>Primary Goal:</strong> ${d.goal}</p>`;
+
+  // Success Metrics
+  html += `<h3>Success Metrics</h3>`;
+  html += `<ul class="metrics-list">${d.metrics.map(m => `<li>${m}</li>`).join('')}</ul>`;
+
+  // RAID Log
+  html += `<h3>RAID Log</h3>`;
+  if (d.raid.length > 0) {
+    html += `<table><thead><tr>
+      <th>Issue</th><th>Description</th><th>Severity</th><th>Mitigation Plan</th><th>Logged</th><th>Needed</th><th>Resolved</th><th>Owner</th>
+    </tr></thead><tbody>`;
+    d.raid.forEach(r => {
+      html += `<tr>
+        <td>${r.issue}</td><td>${r.desc}</td><td>${r.severity}</td><td>${r.mitigation}</td>
+        <td>${r.logged}</td><td>${r.needed}</td><td>${r.resolved || '—'}</td><td>${r.owner}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  } else {
+    html += `<p>No RAID items logged.</p>`;
+  }
+
+  // Key Decision Log
+  html += `<h3>Key Decision Log</h3>`;
+  if (d.decisions.length > 0) {
+    html += `<table><thead><tr>
+      <th>Decision</th><th>Description</th><th>Key Artifact Links</th><th>Date Needed</th><th>Date Resolved</th><th>Owner</th>
+    </tr></thead><tbody>`;
+    d.decisions.forEach(dec => {
+      html += `<tr>
+        <td>${dec.name}</td><td>${dec.desc}</td><td>${dec.artifacts}</td>
+        <td>${dec.needed}</td><td>${dec.resolved || '—'}</td><td>${dec.owner}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  } else {
+    html += `<p>No decisions logged yet.</p>`;
+  }
+
+  // Platforms
+  html += `<h3>Platforms</h3>`;
+  html += `<div class="platform-grid">
+    <div class="platform-item"><strong>Design</strong><span>${d.platforms.design}</span></div>
+    <div class="platform-item"><strong>UX Research</strong><span>${d.platforms.research}</span></div>
+    <div class="platform-item"><strong>Engineering</strong><span>${d.platforms.engineering}</span></div>
+  </div>`;
+
+  // Team Contacts
+  html += `<h3>Team Contacts</h3>`;
+  html += `<div class="contacts-grid">`;
+  html += `<div class="contact-group"><strong>UX</strong><ul>${d.contacts.ux.map(c => `<li>${c.name}${c.role ? `<span class="contact-role">— ${c.role}</span>` : ''}</li>`).join('')}</ul></div>`;
+  html += `<div class="contact-group"><strong>Engineering</strong><ul>${d.contacts.engineering.map(c => `<li>${c.name}${c.role ? `<span class="contact-role">— ${c.role}</span>` : ''}</li>`).join('')}</ul></div>`;
+  html += `<div class="contact-group"><strong>Product Management</strong><ul>${d.contacts.pm.map(c => `<li>${c.name}${c.role ? `<span class="contact-role">— ${c.role}</span>` : ''}</li>`).join('')}</ul></div>`;
+  html += `<div class="contact-group"><strong>Key Decision Makers</strong><ul>${d.contacts.decisionMakers.map(c => `<li>${c.name}${c.role ? `<span class="contact-role">— ${c.role}</span>` : ''}</li>`).join('')}</ul></div>`;
+  html += `</div>`;
+
+  modalContent.innerHTML = html;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProjectModal() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+modalClose.addEventListener('click', closeProjectModal);
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) closeProjectModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('open')) closeProjectModal();
+});
+
+// Attach click handlers to kanban cards
+document.querySelectorAll('.kanban-card[data-project]').forEach(card => {
+  card.addEventListener('click', () => {
+    openProjectModal(card.dataset.project);
+  });
 });
