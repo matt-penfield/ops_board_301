@@ -192,6 +192,56 @@ debtData.forEach(d => {
     </tr>`;
 });
 
+// ── DEBT TABLE SORTING ──
+let debtSortKey = null;
+let debtSortDir = 'asc';
+
+function renderDebtTable(data) {
+  debtTbody.innerHTML = '';
+  data.forEach(d => {
+    const sevColor = d.severity === 'High' ? 'var(--red)' : d.severity === 'Medium' ? 'var(--yellow)' : 'var(--text-muted)';
+    debtTbody.innerHTML += `
+      <tr>
+        <td>${d.issue}</td>
+        <td style="color:${sevColor};font-weight:500">${d.severity}</td>
+        <td>${d.age}</td>
+        <td>${d.screens}</td>
+      </tr>`;
+  });
+}
+
+function sortDebtTable(key) {
+  const headers = document.querySelectorAll('#debt-backlog-table th.sortable');
+  if (debtSortKey === key) {
+    debtSortDir = debtSortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    debtSortKey = key;
+    debtSortDir = 'asc';
+  }
+  headers.forEach(th => { th.classList.remove('asc', 'desc'); });
+  const activeHeader = document.querySelector(`#debt-backlog-table th[data-sort="${key}"]`);
+  if (activeHeader) activeHeader.classList.add(debtSortDir);
+
+  const sorted = [...debtData].sort((a, b) => {
+    let av, bv;
+    if (key === 'issue') { av = a.issue.toLowerCase(); bv = b.issue.toLowerCase(); }
+    else if (key === 'severity') {
+      const order = { High: 0, Medium: 1, Low: 2 };
+      av = order[a.severity]; bv = order[b.severity];
+    }
+    else if (key === 'age') { av = parseInt(a.age); bv = parseInt(b.age); }
+    else if (key === 'screens') { av = a.screens; bv = b.screens; }
+    if (av < bv) return debtSortDir === 'asc' ? -1 : 1;
+    if (av > bv) return debtSortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  renderDebtTable(sorted);
+}
+
+document.querySelectorAll('#debt-backlog-table th.sortable').forEach(th => {
+  th.addEventListener('click', () => sortDebtTable(th.dataset.sort));
+});
+
 // ── ADOPTION CHART (simple CSS bar chart) ──
 const adoptionData = [
   { month: 'Jan', value: 72 },
