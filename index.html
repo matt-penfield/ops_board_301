@@ -4,232 +4,139 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DesignOps Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1" rel="stylesheet">
+<link rel="stylesheet" href="https://edwardtufte.github.io/et-book/et-book.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- ════════ NAV ════════ -->
 <nav>
-  <div class="logo">
-    <span class="material-symbols-outlined">space_dashboard</span>
-    DesignOps
-  </div>
+  <div class="logo">DesignOps</div>
   <div class="nav-tabs">
-    <button class="active" data-view="overview">
-      <span class="material-symbols-outlined">monitoring</span>
-      <span>Overview</span>
-    </button>
-    <button data-view="team">
-      <span class="material-symbols-outlined">group</span>
-      <span>Team</span>
-    </button>
-    <button data-view="pipeline">
-      <span class="material-symbols-outlined">view_kanban</span>
-      <span>Pipeline</span>
-    </button>
-    <button data-view="system">
-      <span class="material-symbols-outlined">widgets</span>
-      <span>System Health</span>
-    </button>
+    <button class="active" data-view="overview">Overview</button>
+    <button data-view="team">Team</button>
+    <button data-view="pipeline">Pipeline</button>
+    <button data-view="system">System</button>
   </div>
-  <div class="meta">Updated Jun 29, 2026</div>
+  <div class="meta">30 June 2026</div>
 </nav>
 
 <main>
 
-<!-- ════════ OVERVIEW ════════ -->
+<!-- ════ OVERVIEW ════ -->
 <section class="view active" id="view-overview">
   <div class="view-header">
     <h1>Overview</h1>
-    <p>Quick daily health check across capacity, pipeline, design system, and delivery.</p>
+    <p>Daily health check across capacity, pipeline, design system, and delivery.</p>
   </div>
 
-  <div class="grid grid-4">
-    <div class="card">
-      <div class="card-label">Utilization</div>
-      <div class="card-value">78%</div>
-      <div class="card-sub">Team average this sprint</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Active Requests</div>
-      <div class="card-value">24</div>
-      <div class="card-sub">6 added this week</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Component Adoption</div>
-      <div class="card-value">87%</div>
-      <div class="card-sub">+3% from last month</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Avg Handoff Time</div>
-      <div class="card-value">2.4d</div>
-      <div class="card-sub">Target: ≤3 days</div>
-    </div>
+  <div class="kpi-strip">
+    <span class="kpi-item">Utilization <span class="kpi-value">78%</span><span class="kpi-note">team avg this sprint</span></span>
+    <span class="kpi-item">Active Requests <span class="kpi-value">24</span><span class="kpi-note">+6 this week</span></span>
+    <span class="kpi-item">Component Adoption <span class="kpi-value">87%</span><span class="kpi-note">+3% from last month</span></span>
+    <span class="kpi-item">Avg Handoff <span class="kpi-value">2.4 days</span><span class="kpi-note">target ≤3</span></span>
   </div>
 
-  <div class="section-title">
-    <span class="material-symbols-outlined">vitals</span>
-    Domain Health
+  <div class="section-title">Domain Health</div>
+  <div class="health-row">
+    <span class="health-label">Team Capacity</span>
+    <span class="health-status">No overloaded designers</span>
   </div>
-  <div class="card">
-    <div class="health-row">
-      <span class="status-dot dot-green"></span>
-      <span class="health-label">Team Capacity</span>
-      <span class="health-status" style="color:var(--green)">Healthy — no overloaded designers</span>
-    </div>
-    <div class="health-row">
-      <span class="status-dot dot-yellow"></span>
-      <span class="health-label">Project Pipeline</span>
-      <span class="health-status" style="color:var(--yellow)">Warning — 3 requests past SLA</span>
-    </div>
-    <div class="health-row">
-      <span class="status-dot dot-green"></span>
-      <span class="health-label">Design System</span>
-      <span class="health-status" style="color:var(--green)">Healthy — adoption trending up</span>
-    </div>
-    <div class="health-row">
-      <span class="status-dot dot-green"></span>
-      <span class="health-label">Handoff &amp; Delivery</span>
-      <span class="health-status" style="color:var(--green)">Healthy — avg under target</span>
-    </div>
+  <div class="health-row">
+    <span class="health-label">Project Pipeline</span>
+    <span class="health-status warn">3 requests past SLA</span>
+  </div>
+  <div class="health-row">
+    <span class="health-label">Design System</span>
+    <span class="health-status">Adoption trending up</span>
+  </div>
+  <div class="health-row">
+    <span class="health-label">Handoff &amp; Delivery</span>
+    <span class="health-status">Average under target</span>
   </div>
 </section>
 
-<!-- ════════ TEAM ════════ -->
+<!-- ════ TEAM ════ -->
 <section class="view" id="view-team">
   <div class="view-header">
     <h1>Team</h1>
-    <p>Per-designer workload and availability — use this to spot imbalance and plan reallocation.</p>
+    <p>Per-designer workload and availability — spot imbalance and plan reallocation.</p>
   </div>
 
-  <div class="grid grid-3" style="margin-bottom:24px;">
-    <div class="card">
-      <div class="card-label">Team Size</div>
-      <div class="card-value">8</div>
-      <div class="card-sub">1 open headcount</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Avg Utilization</div>
-      <div class="card-value">78%</div>
-      <div class="card-sub">Target: 75–85%</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Upcoming PTO</div>
-      <div class="card-value">2</div>
-      <div class="card-sub">Next 2 weeks</div>
-    </div>
+  <div class="kpi-strip">
+    <span class="kpi-item">Team Size <span class="kpi-value">8</span><span class="kpi-note">1 open headcount</span></span>
+    <span class="kpi-item">Avg Utilization <span class="kpi-value">78%</span><span class="kpi-note">target 75–85%</span></span>
+    <span class="kpi-item">Upcoming PTO <span class="kpi-value">2</span><span class="kpi-note">next 2 weeks</span></span>
   </div>
 
-  <div class="section-title">
-    <span class="material-symbols-outlined">bar_chart</span>
-    Sprint Allocation
-  </div>
-  <div class="card">
-    <table>
-      <thead>
-        <tr>
-          <th>Designer</th>
-          <th>Projects</th>
-          <th style="width:35%">Utilization</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="team-table"></tbody>
-    </table>
-  </div>
+  <div class="section-title">Sprint Allocation</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Designer</th>
+        <th>Projects</th>
+        <th>Utilization</th>
+      </tr>
+    </thead>
+    <tbody id="team-table"></tbody>
+  </table>
 </section>
 
-<!-- ════════ PIPELINE ════════ -->
+<!-- ════ PIPELINE ════ -->
 <section class="view" id="view-pipeline">
   <div class="view-header">
-    <h1>Project Pipeline</h1>
-    <p>All active design requests by status — surfaces blockers and SLA breaches at a glance.</p>
+    <h1>Pipeline</h1>
+    <p>Active design requests by status — surfaces blockers and SLA breaches.</p>
   </div>
 
-  <div class="grid grid-4" style="margin-bottom:24px;">
-    <div class="card">
-      <div class="card-label">Queued</div>
-      <div class="card-value">5</div>
-    </div>
-    <div class="card">
-      <div class="card-label">In Progress</div>
-      <div class="card-value">10</div>
-    </div>
-    <div class="card">
-      <div class="card-label">In Review</div>
-      <div class="card-value">6</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Blocked</div>
-      <div class="card-value" style="color:var(--red)">3</div>
-    </div>
+  <div class="kpi-strip">
+    <span class="kpi-item">Queued <span class="kpi-value">5</span></span>
+    <span class="kpi-item">In Progress <span class="kpi-value">10</span></span>
+    <span class="kpi-item">In Review <span class="kpi-value">6</span></span>
+    <span class="kpi-item">Blocked <span class="kpi-value" style="font-weight:bold">3</span></span>
   </div>
 
-  <div class="section-title">
-    <span class="material-symbols-outlined">view_kanban</span>
-    Board
-  </div>
-  <div class="kanban" id="kanban"></div>
+  <table id="pipeline-table">
+    <thead>
+      <tr>
+        <th>Request</th>
+        <th>Owner / Source</th>
+        <th>Days</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="pipeline-body"></tbody>
+  </table>
 </section>
 
-<!-- ════════ SYSTEM HEALTH ════════ -->
+<!-- ════ SYSTEM HEALTH ════ -->
 <section class="view" id="view-system">
   <div class="view-header">
     <h1>System Health</h1>
     <p>Design system adoption, contribution, and debt — informs where to invest in shared components.</p>
   </div>
 
-  <div class="grid grid-4" style="margin-bottom:24px;">
-    <div class="card">
-      <div class="card-label">Adoption Rate</div>
-      <div class="card-value">87%</div>
-      <div class="card-sub">System vs. detached instances</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Coverage Gaps</div>
-      <div class="card-value">4</div>
-      <div class="card-sub">Flows with no system mapping</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Contributions</div>
-      <div class="card-value">7</div>
-      <div class="card-sub">New components this month</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Design Debt</div>
-      <div class="card-value" style="color:var(--orange)">12</div>
-      <div class="card-sub">Deprecated patterns in use</div>
-    </div>
+  <div class="kpi-strip">
+    <span class="kpi-item">Adoption <span class="kpi-value">87%</span><span class="kpi-note">system vs. detached</span></span>
+    <span class="kpi-item">Coverage Gaps <span class="kpi-value">4</span><span class="kpi-note">unmapped flows</span></span>
+    <span class="kpi-item">Contributions <span class="kpi-value">7</span><span class="kpi-note">new this month</span></span>
+    <span class="kpi-item">Debt Items <span class="kpi-value">12</span><span class="kpi-note">deprecated patterns</span></span>
   </div>
 
-  <div class="section-title">
-    <span class="material-symbols-outlined">trending_up</span>
-    Adoption Trend (last 6 months)
-  </div>
-  <div class="card">
-    <div class="chart-area" id="adoption-chart"></div>
-  </div>
+  <div class="section-title">Adoption Trend</div>
+  <div class="sparkline-wrap" id="adoption-chart"></div>
 
-  <div class="section-title">
-    <span class="material-symbols-outlined">warning</span>
-    Debt Backlog
-  </div>
-  <div class="card">
-    <table>
-      <thead>
-        <tr>
-          <th>Issue</th>
-          <th>Severity</th>
-          <th>Age</th>
-          <th>Affected Screens</th>
-        </tr>
-      </thead>
-      <tbody id="debt-table"></tbody>
-    </table>
-  </div>
+  <div class="section-title">Debt Backlog</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Issue</th>
+        <th>Severity</th>
+        <th>Age</th>
+        <th>Screens</th>
+      </tr>
+    </thead>
+    <tbody id="debt-table"></tbody>
+  </table>
 </section>
 
 </main>
