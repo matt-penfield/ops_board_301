@@ -10,14 +10,14 @@ document.querySelectorAll('.nav-tabs button').forEach(btn => {
 
 // ── TEAM DATA ──
 const teamData = [
-  { name: 'Alex Chen',     projects: 'Checkout redesign, Mobile nav',  util: 92, status: 'high' },
-  { name: 'Priya Sharma',  projects: 'Onboarding flow',               util: 74, status: 'ok' },
-  { name: 'James Okafor',  projects: 'Dashboard v2, Settings',        util: 85, status: 'ok' },
-  { name: 'Mei Lin',       projects: 'Design system — icons',         util: 68, status: 'ok' },
-  { name: 'Sara Müller',   projects: 'Search experience',             util: 80, status: 'ok' },
-  { name: 'Dan Reeves',    projects: 'Notifications, Alerts',         util: 88, status: 'high' },
-  { name: 'Kim Tanaka',    projects: 'Profile settings',              util: 55, status: 'low' },
-  { name: 'Luca Bianchi',  projects: 'Data export flow',              util: 72, status: 'ok' },
+  { name: 'Alex Chen',     projects: 'Checkout redesign, Mobile nav',  util: 92, status: 'high', nextAvailable: '2026-07-14' },
+  { name: 'Priya Sharma',  projects: 'Onboarding flow',               util: 74, status: 'ok',   nextAvailable: '2026-07-07' },
+  { name: 'James Okafor',  projects: 'Dashboard v2, Settings',        util: 85, status: 'ok',   nextAvailable: '2026-07-10' },
+  { name: 'Mei Lin',       projects: 'Design system — icons',         util: 68, status: 'ok',   nextAvailable: '2026-07-03' },
+  { name: 'Sara Müller',   projects: 'Search experience',             util: 80, status: 'ok',   nextAvailable: '2026-07-08' },
+  { name: 'Dan Reeves',    projects: 'Notifications, Alerts',         util: 88, status: 'high', nextAvailable: '2026-07-15' },
+  { name: 'Kim Tanaka',    projects: 'Profile settings',              util: 55, status: 'low',  nextAvailable: '2026-07-02' },
+  { name: 'Luca Bianchi',  projects: 'Data export flow',              util: 72, status: 'ok',   nextAvailable: '2026-07-05' },
 ];
 
 const teamTbody = document.getElementById('team-table');
@@ -26,6 +26,7 @@ teamData.forEach(d => {
   const label = d.util > 85 ? 'Over-allocated' : d.util < 60 ? 'Available' : 'On track';
   const labelColor = d.util > 85 ? 'var(--yellow)' : d.util < 60 ? 'var(--green)' : 'var(--text-muted)';
   const projectLinks = d.projects.split(', ').map(p => `<a class="project-link" data-project="${p}">${p}</a>`).join(', ');
+  const availDate = new Date(d.nextAvailable).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   teamTbody.innerHTML += `
     <tr>
       <td style="font-weight:500">${d.name}</td>
@@ -39,6 +40,7 @@ teamData.forEach(d => {
         </div>
       </td>
       <td style="font-size:12px;color:${labelColor}">${label}</td>
+      <td style="font-size:12px;white-space:nowrap">${availDate}</td>
     </tr>`;
 });
 
@@ -53,6 +55,7 @@ function renderTeamTable(data) {
     const label = d.util > 85 ? 'Over-allocated' : d.util < 60 ? 'Available' : 'On track';
     const labelColor = d.util > 85 ? 'var(--yellow)' : d.util < 60 ? 'var(--green)' : 'var(--text-muted)';
     const projectLinks = d.projects.split(', ').map(p => `<a class="project-link" data-project="${p}">${p}</a>`).join(', ');
+    const availDate = new Date(d.nextAvailable).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     teamTbody.innerHTML += `
       <tr>
         <td style="font-weight:500">${d.name}</td>
@@ -66,6 +69,7 @@ function renderTeamTable(data) {
           </div>
         </td>
         <td style="font-size:12px;color:${labelColor}">${label}</td>
+        <td style="font-size:12px;white-space:nowrap">${availDate}</td>
       </tr>`;
   });
 }
@@ -91,6 +95,7 @@ function sortTeamTable(key) {
       const order = { high: 0, ok: 1, low: 2 };
       av = order[a.status]; bv = order[b.status];
     }
+    else if (key === 'nextAvailable') { av = a.nextAvailable; bv = b.nextAvailable; }
     if (av < bv) return teamSortDir === 'asc' ? -1 : 1;
     if (av > bv) return teamSortDir === 'asc' ? 1 : -1;
     return 0;
