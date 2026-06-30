@@ -8,6 +8,11 @@ document.querySelectorAll('.nav-tabs button').forEach(btn => {
   });
 });
 
+// ── ATTENTION BANNER DISMISS ──
+document.getElementById('attention-dismiss').addEventListener('click', () => {
+  document.getElementById('attention-banner').classList.add('hidden');
+});
+
 // ── DOMAIN HEALTH ──
 const domainHealth = [
   { domain: 'Project Pipeline', status: 'yellow', metric: '3', metricLabel: 'past SLA', trend: [1, 0, 2, 1, 2, 3, 3], statusText: 'Warning — trending up this week' },
