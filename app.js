@@ -154,36 +154,36 @@ document.querySelectorAll('#team-allocation-table th.sortable').forEach(th => {
 // ── PIPELINE / KANBAN DATA ──
 const pipelineData = {
   queued: [
-    { title: 'Billing page update', meta: 'Req: PM — Taylor', days: 2 },
-    { title: 'Empty states audit', meta: 'Req: Design — Mei', days: 1 },
-    { title: 'Error message review', meta: 'Req: Eng — Navid', days: 4 },
-    { title: 'FAQ page refresh', meta: 'Req: Marketing', days: 1 },
-    { title: 'Tooltip standardization', meta: 'Req: Design — Sara', days: 3 },
+    { title: 'Billing page update', meta: 'Req: PM — Taylor', days: 2, risk: 'low' },
+    { title: 'Empty states audit', meta: 'Req: Design — Mei', days: 1, risk: 'low' },
+    { title: 'Error message review', meta: 'Req: Eng — Navid', days: 4, risk: 'medium' },
+    { title: 'FAQ page refresh', meta: 'Req: Marketing', days: 1, risk: 'low' },
+    { title: 'Tooltip standardization', meta: 'Req: Design — Sara', days: 3, risk: 'low' },
   ],
   progress: [
-    { title: 'Checkout redesign', meta: 'Alex Chen — Sprint 14', days: 5 },
-    { title: 'Onboarding flow v2', meta: 'Priya Sharma — Sprint 14', days: 3 },
-    { title: 'Mobile nav patterns', meta: 'Alex Chen — Sprint 14', days: 4 },
-    { title: 'Dashboard v2 layouts', meta: 'James Okafor — Sprint 14', days: 6 },
-    { title: 'Search results page', meta: 'Sara Müller — Sprint 14', days: 2 },
-    { title: 'Notification center', meta: 'Dan Reeves — Sprint 14', days: 3 },
-    { title: 'Data export wizard', meta: 'Luca Bianchi — Sprint 14', days: 4 },
-    { title: 'Profile edit flow', meta: 'Kim Tanaka — Sprint 14', days: 1 },
-    { title: 'Settings page cleanup', meta: 'James Okafor — Sprint 14', days: 7, blocked: 'Waiting on API spec' },
-    { title: 'Alert system design', meta: 'Dan Reeves — Sprint 14', days: 2 },
+    { title: 'Checkout redesign', meta: 'Alex Chen — Sprint 14', days: 5, risk: 'high', riskReason: 'Revenue-critical flow, tight launch deadline' },
+    { title: 'Onboarding flow v2', meta: 'Priya Sharma — Sprint 14', days: 3, risk: 'medium' },
+    { title: 'Mobile nav patterns', meta: 'Alex Chen — Sprint 14', days: 4, risk: 'medium' },
+    { title: 'Dashboard v2 layouts', meta: 'James Okafor — Sprint 14', days: 6, risk: 'high', riskReason: 'Scope creep — 3 new panels added mid-sprint' },
+    { title: 'Search results page', meta: 'Sara Müller — Sprint 14', days: 2, risk: 'low' },
+    { title: 'Notification center', meta: 'Dan Reeves — Sprint 14', days: 3, risk: 'low' },
+    { title: 'Data export wizard', meta: 'Luca Bianchi — Sprint 14', days: 4, risk: 'medium' },
+    { title: 'Profile edit flow', meta: 'Kim Tanaka — Sprint 14', days: 1, risk: 'low' },
+    { title: 'Settings page cleanup', meta: 'James Okafor — Sprint 14', days: 7, risk: 'high', blocked: 'Waiting on API spec' },
+    { title: 'Alert system design', meta: 'Dan Reeves — Sprint 14', days: 2, risk: 'low' },
   ],
   review: [
-    { title: 'Icon library expansion', meta: 'Mei Lin — Review by leads', days: 3 },
-    { title: 'Color token update', meta: 'Mei Lin — Review by leads', days: 2 },
-    { title: 'Card component variants', meta: 'Priya Sharma — Eng review', days: 1 },
-    { title: 'Loading skeleton specs', meta: 'Kim Tanaka — PM review', days: 4 },
-    { title: 'Table pagination', meta: 'Luca Bianchi — Eng review', days: 2 },
-    { title: 'Filter panel redesign', meta: 'Sara Müller — PM review', days: 5, blocked: 'PM unavailable' },
+    { title: 'Icon library expansion', meta: 'Mei Lin — Review by leads', days: 3, risk: 'low' },
+    { title: 'Color token update', meta: 'Mei Lin — Review by leads', days: 2, risk: 'medium' },
+    { title: 'Card component variants', meta: 'Priya Sharma — Eng review', days: 1, risk: 'low' },
+    { title: 'Loading skeleton specs', meta: 'Kim Tanaka — PM review', days: 4, risk: 'medium' },
+    { title: 'Table pagination', meta: 'Luca Bianchi — Eng review', days: 2, risk: 'low' },
+    { title: 'Filter panel redesign', meta: 'Sara Müller — PM review', days: 5, risk: 'high', blocked: 'PM unavailable' },
   ],
   blocked: [
-    { title: 'Settings page cleanup', meta: 'James Okafor', days: 7, blocked: 'Waiting on API spec' },
-    { title: 'Filter panel redesign', meta: 'Sara Müller', days: 5, blocked: 'PM unavailable for review' },
-    { title: 'Permissions matrix', meta: 'Dan Reeves', days: 9, blocked: 'Dependency on IAM team' },
+    { title: 'Settings page cleanup', meta: 'James Okafor', days: 7, risk: 'high', blocked: 'Waiting on API spec' },
+    { title: 'Filter panel redesign', meta: 'Sara Müller', days: 5, risk: 'high', blocked: 'PM unavailable for review' },
+    { title: 'Permissions matrix', meta: 'Dan Reeves', days: 9, risk: 'high', blocked: 'Dependency on IAM team' },
   ],
 };
 
@@ -194,18 +194,70 @@ const cols = [
   { key: 'review', label: 'In Review' },
   { key: 'blocked', label: 'Blocked' },
 ];
-cols.forEach(col => {
-  const items = pipelineData[col.key];
-  let html = `<div class="kanban-col"><h3>${col.label} <span class="count">${items.length}</span></h3>`;
-  items.forEach(item => {
-    html += `<div class="kanban-card" data-project="${item.title}">
-      <div class="kc-title">${item.title}</div>
-      <div class="kc-meta">${item.meta} · ${item.days}d</div>
-      ${item.blocked ? `<div class="kc-blocked"><span class="material-symbols-outlined">error</span>${item.blocked}</div>` : ''}
-    </div>`;
+
+function riskColor(risk) {
+  if (risk === 'high') return 'var(--red)';
+  if (risk === 'medium') return 'var(--yellow)';
+  return 'var(--green)';
+}
+
+const kanbanSortState = {};
+
+function renderKanban() {
+  kanbanEl.innerHTML = '';
+  cols.forEach(col => {
+    let items = [...pipelineData[col.key]];
+    const sort = kanbanSortState[col.key];
+    if (sort) {
+      items.sort((a, b) => {
+        let av, bv;
+        if (sort.key === 'risk') {
+          const order = { high: 0, medium: 1, low: 2 };
+          av = order[a.risk]; bv = order[b.risk];
+        } else {
+          av = a.days; bv = b.days;
+        }
+        return sort.dir === 'asc' ? av - bv : bv - av;
+      });
+    }
+    let html = `<div class="kanban-col" data-col="${col.key}">`;
+    html += `<h3>${col.label} <span class="count">${items.length}</span></h3>`;
+    html += `<div class="kanban-sort-bar">`;
+    html += `<button class="kanban-sort-btn${sort && sort.key === 'risk' ? ' active' : ''}" data-col="${col.key}" data-sort="risk">Risk${sort && sort.key === 'risk' ? (sort.dir === 'asc' ? ' ↑' : ' ↓') : ''}</button>`;
+    html += `<button class="kanban-sort-btn${sort && sort.key === 'days' ? ' active' : ''}" data-col="${col.key}" data-sort="days">Days${sort && sort.key === 'days' ? (sort.dir === 'asc' ? ' ↑' : ' ↓') : ''}</button>`;
+    html += `</div>`;
+    items.forEach(item => {
+      let alert = '';
+      if (item.blocked) {
+        alert = `<div class="kc-blocked"><span class="material-symbols-outlined">error</span>${item.blocked}</div>`;
+      } else if (item.risk === 'high') {
+        alert = `<div class="kc-blocked"><span class="material-symbols-outlined">error</span>${item.riskReason || 'High risk'}</div>`;
+      }
+      html += `<div class="kanban-card risk-${item.risk}" data-project="${item.title}">
+        <div class="kc-title">${item.title}</div>
+        <div class="kc-meta">${item.meta} · ${item.days}d</div>
+        ${alert}
+      </div>`;
+    });
+    html += '</div>';
+    kanbanEl.innerHTML += html;
   });
-  html += '</div>';
-  kanbanEl.innerHTML += html;
+}
+renderKanban();
+
+// Delegated sort button handler
+kanbanEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.kanban-sort-btn');
+  if (!btn) return;
+  const col = btn.dataset.col;
+  const key = btn.dataset.sort;
+  const current = kanbanSortState[col];
+  if (current && current.key === key) {
+    current.dir = current.dir === 'asc' ? 'desc' : 'asc';
+  } else {
+    kanbanSortState[col] = { key, dir: 'asc' };
+  }
+  renderKanban();
 });
 
 // ── DEBT TABLE ──
@@ -638,11 +690,12 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modal.classList.contains('open')) closeProjectModal();
 });
 
-// Attach click handlers to kanban cards
-document.querySelectorAll('.kanban-card[data-project]').forEach(card => {
-  card.addEventListener('click', () => {
+// Attach click handlers to kanban cards (delegated for sort re-renders)
+kanbanEl.addEventListener('click', (e) => {
+  const card = e.target.closest('.kanban-card[data-project]');
+  if (card && !e.target.closest('.kanban-sort-btn')) {
     openProjectModal(card.dataset.project);
-  });
+  }
 });
 
 // Attach click handlers to project links (delegated for sorting re-renders)

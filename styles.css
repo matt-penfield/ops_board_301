@@ -319,7 +319,29 @@ th.sortable.desc::after {
   border-radius: 8px;
   padding: 14px;
   margin-bottom: 10px;
+  border-left: 3px solid var(--border);
 }
+.kanban-card.risk-high { border-left-color: var(--red); }
+.kanban-card.risk-medium { border-left-color: var(--yellow); }
+.kanban-card.risk-low { border-left-color: var(--green); }
+.kanban-sort-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.kanban-sort-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.kanban-sort-btn:hover { border-color: var(--accent); color: var(--text); }
+.kanban-sort-btn.active { border-color: var(--accent); color: var(--accent); }
 .kanban-card .kc-title {
   font-size: 13px;
   font-weight: 500;
