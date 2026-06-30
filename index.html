@@ -76,14 +76,14 @@
   </div>
   <div class="card">
     <div class="health-row">
-      <span class="status-dot dot-green"></span>
-      <span class="health-label">Team Capacity</span>
-      <span class="health-status" style="color:var(--green)">Healthy — no overloaded designers</span>
-    </div>
-    <div class="health-row">
       <span class="status-dot dot-yellow"></span>
       <span class="health-label">Project Pipeline</span>
       <span class="health-status" style="color:var(--yellow)">Warning — 3 requests past SLA</span>
+    </div>
+    <div class="health-row">
+      <span class="status-dot dot-green"></span>
+      <span class="health-label">Team Capacity</span>
+      <span class="health-status" style="color:var(--green)">Healthy — no overloaded designers</span>
     </div>
     <div class="health-row">
       <span class="status-dot dot-green"></span>
@@ -128,13 +128,13 @@
     Sprint Allocation
   </div>
   <div class="card">
-    <table>
+    <table id="team-allocation-table">
       <thead>
         <tr>
-          <th>Designer</th>
-          <th>Projects</th>
-          <th style="width:35%">Utilization</th>
-          <th>Status</th>
+          <th class="sortable" data-sort="name">Designer</th>
+          <th class="sortable" data-sort="projects">Projects</th>
+          <th class="sortable" data-sort="util" style="width:35%">Utilization</th>
+          <th class="sortable" data-sort="status">Status</th>
         </tr>
       </thead>
       <tbody id="team-table"></tbody>

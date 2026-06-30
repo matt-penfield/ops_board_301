@@ -168,6 +168,29 @@ tbody td {
 tbody tr:last-child td { border-bottom: none; }
 tbody tr:hover { background: var(--surface-alt); }
 
+/* ── SORTABLE HEADERS ── */
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 20px;
+}
+th.sortable::after {
+  content: '⇅';
+  position: absolute;
+  right: 4px;
+  font-size: 10px;
+  opacity: 0.4;
+}
+th.sortable.asc::after {
+  content: '↑';
+  opacity: 1;
+}
+th.sortable.desc::after {
+  content: '↓';
+  opacity: 1;
+}
+
 /* ── BARS ── */
 .bar-container {
   background: var(--surface-alt);

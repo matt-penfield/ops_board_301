@@ -41,6 +41,65 @@ teamData.forEach(d => {
     </tr>`;
 });
 
+// ── TEAM TABLE SORTING ──
+let teamSortKey = null;
+let teamSortDir = 'asc';
+
+function renderTeamTable(data) {
+  teamTbody.innerHTML = '';
+  data.forEach(d => {
+    const color = d.util > 85 ? 'var(--yellow)' : d.util < 60 ? 'var(--text-muted)' : 'var(--accent)';
+    const label = d.util > 85 ? 'Over-allocated' : d.util < 60 ? 'Available' : 'On track';
+    const labelColor = d.util > 85 ? 'var(--yellow)' : d.util < 60 ? 'var(--green)' : 'var(--text-muted)';
+    teamTbody.innerHTML += `
+      <tr>
+        <td style="font-weight:500">${d.name}</td>
+        <td style="color:var(--text-muted)">${d.projects}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="bar-container" style="flex:1">
+              <div class="bar-fill" style="width:${d.util}%;background:${color}"></div>
+            </div>
+            <span style="font-size:12px;min-width:32px">${d.util}%</span>
+          </div>
+        </td>
+        <td style="font-size:12px;color:${labelColor}">${label}</td>
+      </tr>`;
+  });
+}
+
+function sortTeamTable(key) {
+  const headers = document.querySelectorAll('#team-allocation-table th.sortable');
+  if (teamSortKey === key) {
+    teamSortDir = teamSortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    teamSortKey = key;
+    teamSortDir = 'asc';
+  }
+  headers.forEach(th => { th.classList.remove('asc', 'desc'); });
+  const activeHeader = document.querySelector(`#team-allocation-table th[data-sort="${key}"]`);
+  if (activeHeader) activeHeader.classList.add(teamSortDir);
+
+  const sorted = [...teamData].sort((a, b) => {
+    let av, bv;
+    if (key === 'name') { av = a.name.toLowerCase(); bv = b.name.toLowerCase(); }
+    else if (key === 'projects') { av = a.projects.toLowerCase(); bv = b.projects.toLowerCase(); }
+    else if (key === 'util') { av = a.util; bv = b.util; }
+    else if (key === 'status') {
+      const order = { high: 0, ok: 1, low: 2 };
+      av = order[a.status]; bv = order[b.status];
+    }
+    if (av < bv) return teamSortDir === 'asc' ? -1 : 1;
+    if (av > bv) return teamSortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  renderTeamTable(sorted);
+}
+
+document.querySelectorAll('#team-allocation-table th.sortable').forEach(th => {
+  th.addEventListener('click', () => sortTeamTable(th.dataset.sort));
+});
+
 // ── PIPELINE / KANBAN DATA ──
 const pipelineData = {
   queued: [
