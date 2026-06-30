@@ -16,7 +16,7 @@ document.getElementById('attention-dismiss').addEventListener('click', () => {
 // ── DOMAIN HEALTH ──
 const domainHealth = [
   { domain: 'Project Pipeline', status: 'yellow', metric: '3', metricLabel: 'past deadline', trend: [1, 0, 2, 1, 2, 3, 3], statusText: 'Warning — trending up this week' },
-  { domain: 'Team Capacity', status: 'green', metric: '78%', metricLabel: 'utilized', trend: [82, 80, 76, 79, 75, 77, 78], statusText: 'Healthy — no overloaded designers' },
+  { domain: 'Team Capacity', status: 'yellow', metric: '77%', metricLabel: 'utilized', trend: [82, 80, 76, 79, 75, 77, 77], statusText: 'Warning — 2 designers overallocated' },
   { domain: 'Design System', status: 'green', metric: '87%', metricLabel: 'adoption', trend: [79, 81, 82, 84, 85, 86, 87], statusText: 'Healthy — adoption trending up' },
   { domain: 'Available Resources', status: 'green', metric: '3', metricLabel: 'designers free', trend: [1, 1, 2, 2, 1, 2, 3], statusText: 'Healthy — capacity opening up' },
 ];
@@ -59,14 +59,14 @@ domainHealth.forEach(d => {
 
 // ── TEAM DATA ──
 const teamData = [
-  { name: 'Alex Chen',     projects: 'Checkout redesign, Mobile nav',  util: 92, status: 'high', nextAvailable: '2026-07-14' },
-  { name: 'Priya Sharma',  projects: 'Onboarding flow',               util: 74, status: 'ok',   nextAvailable: '2026-07-07' },
-  { name: 'James Okafor',  projects: 'Dashboard v2, Settings',        util: 85, status: 'ok',   nextAvailable: '2026-07-10' },
-  { name: 'Mei Lin',       projects: 'Design system — icons',         util: 68, status: 'ok',   nextAvailable: '2026-07-03' },
-  { name: 'Sara Müller',   projects: 'Search experience',             util: 80, status: 'ok',   nextAvailable: '2026-07-08' },
-  { name: 'Dan Reeves',    projects: 'Notifications, Alerts',         util: 88, status: 'high', nextAvailable: '2026-07-15' },
-  { name: 'Kim Tanaka',    projects: 'Profile settings',              util: 55, status: 'low',  nextAvailable: '2026-07-02' },
-  { name: 'Luca Bianchi',  projects: 'Data export flow',              util: 72, status: 'ok',   nextAvailable: '2026-07-05' },
+  { name: 'Alex Chen',     projects: 'Checkout redesign, Mobile nav patterns',  util: 92, status: 'high', nextAvailable: '2026-07-14' },
+  { name: 'Priya Sharma',  projects: 'Onboarding flow v2, Card component variants',               util: 74, status: 'ok',   nextAvailable: '2026-07-07' },
+  { name: 'James Okafor',  projects: 'Dashboard v2 layouts, Settings page cleanup',        util: 85, status: 'ok',   nextAvailable: '2026-07-10' },
+  { name: 'Mei Lin',       projects: 'Icon library expansion, Color token update',         util: 68, status: 'ok',   nextAvailable: '2026-07-03' },
+  { name: 'Sara Müller',   projects: 'Search results page, Filter panel redesign',             util: 80, status: 'ok',   nextAvailable: '2026-07-08' },
+  { name: 'Dan Reeves',    projects: 'Notification center, Alert system design, Permissions matrix',         util: 88, status: 'high', nextAvailable: '2026-07-15' },
+  { name: 'Kim Tanaka',    projects: 'Profile edit flow, Loading skeleton specs',              util: 55, status: 'low',  nextAvailable: '2026-07-02' },
+  { name: 'Luca Bianchi',  projects: 'Data export wizard, Table pagination',              util: 72, status: 'ok',   nextAvailable: '2026-07-05' },
 ];
 
 const teamTbody = document.getElementById('team-table');
@@ -159,7 +159,7 @@ document.querySelectorAll('#team-allocation-table th.sortable').forEach(th => {
 // ── ALLOCATION VS REQUESTS AREA CHART ──
 const allocationChartData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  allocation: [68, 70, 72, 74, 76, 78, 80, 82, 79, 77, 75, 73, 74, 76, 78, 79, 78, 78],
+  allocation: [68, 70, 72, 74, 76, 78, 80, 82, 79, 77, 75, 73, 74, 76, 78, 79, 78, 77],
   requests:   [6,  7,  8,  9,  10, 12, 11, 14, 13, 12, 10, 9,  11, 12, 13, 14, 13, 14],
 };
 
