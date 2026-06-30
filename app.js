@@ -8,6 +8,13 @@ document.querySelectorAll('.nav-tabs button').forEach(btn => {
   });
 });
 
+document.querySelector('.logo').addEventListener('click', () => {
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelector('.nav-tabs button[data-view="overview"]').classList.add('active');
+  document.getElementById('view-overview').classList.add('active');
+});
+
 // ── ATTENTION BANNER DISMISS ──
 document.getElementById('attention-dismiss').addEventListener('click', () => {
   document.getElementById('attention-banner').classList.add('hidden');
