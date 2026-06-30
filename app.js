@@ -151,6 +151,70 @@ document.querySelectorAll('#team-allocation-table th.sortable').forEach(th => {
   th.addEventListener('click', () => sortTeamTable(th.dataset.sort));
 });
 
+// ── ALLOCATION VS REQUESTS AREA CHART ──
+const allocationChartData = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  allocation: [68, 70, 72, 74, 76, 78, 80, 82, 79, 77, 75, 73, 74, 76, 78, 79, 78, 78],
+  requests:   [6,  7,  8,  9,  10, 12, 11, 14, 13, 12, 10, 9,  11, 12, 13, 14, 13, 14],
+};
+
+(function renderAllocationChart() {
+  const el = document.getElementById('allocation-chart');
+  const { labels, allocation, requests } = allocationChartData;
+  const W = 800, H = 120, pad = { top: 12, right: 28, bottom: 22, left: 32 };
+  const plotW = W - pad.left - pad.right;
+  const plotH = H - pad.top - pad.bottom;
+  const n = labels.length;
+
+  // Scales
+  const allocMin = 0, allocMax = 100;
+  const reqMax = Math.max(...requests) + 2;
+
+  function xPos(i) { return pad.left + (i / (n - 1)) * plotW; }
+  function yAlloc(v) { return pad.top + (1 - (v - allocMin) / (allocMax - allocMin)) * plotH; }
+  function yReq(v) { return pad.top + (1 - v / reqMax) * plotH; }
+
+  // Build paths
+  const allocPoints = allocation.map((v, i) => `${xPos(i)},${yAlloc(v)}`);
+  const reqPoints = requests.map((v, i) => `${xPos(i)},${yReq(v)}`);
+  const allocArea = `M${allocPoints[0]} ${allocPoints.join(' L')} L${xPos(n-1)},${pad.top + plotH} L${xPos(0)},${pad.top + plotH} Z`;
+  const reqArea = `M${reqPoints[0]} ${reqPoints.join(' L')} L${xPos(n-1)},${pad.top + plotH} L${xPos(0)},${pad.top + plotH} Z`;
+  const allocLine = `M${allocPoints.join(' L')}`;
+  const reqLine = `M${reqPoints.join(' L')}`;
+
+  // Grid lines & labels
+  let grid = '';
+  for (let t = 0; t <= 4; t++) {
+    const y = pad.top + (t / 4) * plotH;
+    const allocVal = Math.round(allocMax - (t / 4) * (allocMax - allocMin));
+    grid += `<line x1="${pad.left}" x2="${W - pad.right}" y1="${y}" y2="${y}" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="2,4"/>`;
+    grid += `<text x="${pad.left - 6}" y="${y + 3}" text-anchor="end" fill="var(--text-muted)" font-size="9" opacity="0.6">${allocVal}%</text>`;
+  }
+  // X labels (every 3rd)
+  labels.forEach((l, i) => {
+    if (i % 3 === 0 || i === n - 1) grid += `<text x="${xPos(i)}" y="${H - 4}" text-anchor="middle" fill="var(--text-muted)" font-size="9" opacity="0.6">${l}</text>`;
+  });
+  // Right-side axis labels for requests
+  for (let t = 0; t <= 4; t++) {
+    const y = pad.top + (t / 4) * plotH;
+    const reqVal = Math.round(reqMax - (t / 4) * reqMax);
+    grid += `<text x="${W - pad.right + 6}" y="${y + 3}" text-anchor="start" fill="var(--text-muted)" font-size="9" opacity="0.6">${reqVal}</text>`;
+  }
+
+  el.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      ${grid}
+      <path d="${allocArea}" fill="rgba(124,138,255,0.08)"/>
+      <path d="${allocLine}" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+      <path d="${reqArea}" fill="rgba(251,191,36,0.06)"/>
+      <path d="${reqLine}" fill="none" stroke="var(--yellow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+    </svg>
+    <div class="chart-legend">
+      <span class="legend-alloc">Avg Allocation %</span>
+      <span class="legend-requests">Open Requests</span>
+    </div>`;
+})();
+
 // ── PIPELINE / KANBAN DATA ──
 const pipelineData = {
   queued: [
