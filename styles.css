@@ -169,13 +169,15 @@ tbody tr:last-child td { border-bottom: none; }
 tbody tr:hover { background: var(--surface-alt); }
 
 /* ── PROJECT LINKS ── */
-.project-link {
+.project-link,
+.issue-link {
   color: var(--accent);
   text-decoration: none;
   cursor: pointer;
   transition: opacity .15s;
 }
-.project-link:hover {
+.project-link:hover,
+.issue-link:hover {
   text-decoration: underline;
   opacity: 0.85;
 }

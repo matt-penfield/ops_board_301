@@ -210,18 +210,18 @@ cols.forEach(col => {
 
 // ── DEBT TABLE ──
 const debtData = [
-  { issue: 'Legacy button styles on 3 flows', severity: 'High', age: '34d', screens: 8 },
-  { issue: 'Deprecated color tokens in settings', severity: 'Medium', age: '21d', screens: 4 },
-  { issue: 'Non-standard spacing in modals', severity: 'Medium', age: '18d', screens: 6 },
-  { issue: 'Old icon set in sidebar nav', severity: 'High', age: '42d', screens: 12 },
-  { issue: 'Inconsistent border radius on cards', severity: 'Low', age: '15d', screens: 3 },
-  { issue: 'Hardcoded colors in email templates', severity: 'Medium', age: '28d', screens: 5 },
-  { issue: 'Missing dark-mode tokens for badges', severity: 'Low', age: '10d', screens: 2 },
-  { issue: 'Legacy form input styling', severity: 'High', age: '55d', screens: 9 },
-  { issue: 'Outdated loading spinner', severity: 'Low', age: '12d', screens: 3 },
-  { issue: 'Detached header component on marketing', severity: 'Medium', age: '30d', screens: 4 },
-  { issue: 'Non-system tooltip on data tables', severity: 'Low', age: '8d', screens: 2 },
-  { issue: 'Deprecated shadow tokens', severity: 'Medium', age: '25d', screens: 6 },
+  { issue: 'Legacy button styles on 3 flows', severity: 'High', age: '34d', screens: 8, caughtBy: 'Maria Lopez', caughtDate: '2026-05-27', description: 'Three checkout and onboarding flows still use the deprecated filled-button variant with old elevation and color tokens. They fall outside the design system and create visual inconsistency.', impact: 'Users experience a jarring shift between new and old UI during critical conversion flows. If left unresolved, it undermines trust in the refresh and may slow down future system-wide token migrations.' },
+  { issue: 'Deprecated color tokens in settings', severity: 'Medium', age: '21d', screens: 4, caughtBy: 'James Okafor', caughtDate: '2026-06-09', description: 'Settings pages reference 14 deprecated color tokens that were removed from the design system in v3.2. Hard-coded hex fallbacks currently prevent breakage.', impact: 'The fallback colors will diverge further from the live palette with each theme update. Eventually causes a11y contrast issues and blocks dark-mode rollout to settings.' },
+  { issue: 'Non-standard spacing in modals', severity: 'Medium', age: '18d', screens: 6, caughtBy: 'Priya Sharma', caughtDate: '2026-06-12', description: 'Six modal dialogs use custom 20px/28px padding instead of the system 16px/24px spacing scale. They were built before the spacing ramp was documented.', impact: 'Creates visual inconsistency when modals appear beside system-compliant components. Increases design debt surface area and complicates future responsive adjustments.' },
+  { issue: 'Old icon set in sidebar nav', severity: 'High', age: '42d', screens: 12, caughtBy: 'Alex Chen', caughtDate: '2026-05-19', description: 'The main sidebar still renders the legacy icon font (v1 Material icons) rather than the current outlined symbol set. Twelve screens rely on it.', impact: 'Icon weight and optical size mismatch is visible on every page load. Blocks full migration to variable-weight symbols and doubles icon font payload.' },
+  { issue: 'Inconsistent border radius on cards', severity: 'Low', age: '15d', screens: 3, caughtBy: 'Sam Rivera', caughtDate: '2026-06-15', description: 'Three dashboard cards use 8px radius instead of the standard 12px token. They were duplicated from an older template.', impact: 'Low visual severity but contributes to an inconsistent feel on the overview dashboard. Easy fix but creates confusion for new contributors.' },
+  { issue: 'Hardcoded colors in email templates', severity: 'Medium', age: '28d', screens: 5, caughtBy: 'James Okafor', caughtDate: '2026-06-02', description: 'Five transactional email templates use hardcoded hex values instead of referencing the shared email token stylesheet.', impact: 'Brand color updates require manual edits to each template. Risk of missed templates creates off-brand customer communications.' },
+  { issue: 'Missing dark-mode tokens for badges', severity: 'Low', age: '10d', screens: 2, caughtBy: 'Priya Sharma', caughtDate: '2026-06-20', description: 'Badge components on the notifications and activity pages have no dark-mode token mappings. They currently render light-mode colors on dark backgrounds.', impact: 'Low contrast makes badges hard to read in dark mode. Affects accessibility scores on those two screens.' },
+  { issue: 'Legacy form input styling', severity: 'High', age: '55d', screens: 9, caughtBy: 'Maria Lopez', caughtDate: '2026-05-06', description: 'Nine forms across account settings and admin panels use the legacy input component with outdated focus rings, label positioning, and no error-state tokens.', impact: 'Inconsistent form UX confuses users and fails WCAG 2.2 focus-visible requirements. Blocks accessibility certification for the admin panel.' },
+  { issue: 'Outdated loading spinner', severity: 'Low', age: '12d', screens: 3, caughtBy: 'Sam Rivera', caughtDate: '2026-06-18', description: 'Three pages still display the old CSS-only spinner instead of the branded Lottie animation adopted in the latest design refresh.', impact: 'Minor brand inconsistency. Low user impact but noticeable during slow network conditions.' },
+  { issue: 'Detached header component on marketing', severity: 'Medium', age: '30d', screens: 4, caughtBy: 'Alex Chen', caughtDate: '2026-05-31', description: 'The marketing site header is a forked copy of the system header component, now 2 versions behind. Navigation link updates require manual syncing.', impact: 'Navigation changes ship to the product but not marketing, causing broken links and brand mismatch. Increases maintenance burden for every nav update.' },
+  { issue: 'Non-system tooltip on data tables', severity: 'Low', age: '8d', screens: 2, caughtBy: 'James Okafor', caughtDate: '2026-06-22', description: 'Data table tooltips on the analytics dashboard use a custom implementation instead of the system Tooltip component. Different animation and positioning logic.', impact: 'Minimal user-facing impact but adds an extra dependency and diverges from the accessibility-tested system tooltip.' },
+  { issue: 'Deprecated shadow tokens', severity: 'Medium', age: '25d', screens: 6, caughtBy: 'Priya Sharma', caughtDate: '2026-06-05', description: 'Six card surfaces use elevation-1/elevation-2 tokens that were renamed to shadow-sm/shadow-md in the v3.0 token migration.', impact: 'Old tokens will be removed in v4.0 causing build failures. Until then, shadow values may drift as only new tokens receive updates.' },
 ];
 
 const debtTbody = document.getElementById('debt-table');
@@ -229,7 +229,7 @@ debtData.forEach(d => {
   const sevColor = d.severity === 'High' ? 'var(--red)' : d.severity === 'Medium' ? 'var(--yellow)' : 'var(--text-muted)';
   debtTbody.innerHTML += `
     <tr>
-      <td>${d.issue}</td>
+      <td><a class="issue-link" data-issue="${d.issue}">${d.issue}</a></td>
       <td style="color:${sevColor};font-weight:500">${d.severity}</td>
       <td>${d.age}</td>
       <td>${d.screens}</td>
@@ -246,7 +246,7 @@ function renderDebtTable(data) {
     const sevColor = d.severity === 'High' ? 'var(--red)' : d.severity === 'Medium' ? 'var(--yellow)' : 'var(--text-muted)';
     debtTbody.innerHTML += `
       <tr>
-        <td>${d.issue}</td>
+        <td><a class="issue-link" data-issue="${d.issue}">${d.issue}</a></td>
         <td style="color:${sevColor};font-weight:500">${d.severity}</td>
         <td>${d.age}</td>
         <td>${d.screens}</td>
@@ -651,5 +651,30 @@ document.addEventListener('click', (e) => {
   if (link) {
     e.preventDefault();
     openProjectModal(link.dataset.project);
+  }
+});
+
+// ── ISSUE MODAL ──
+function openIssueModal(issueName) {
+  const d = debtData.find(item => item.issue === issueName);
+  if (!d) return;
+  const sevColor = d.severity === 'High' ? 'var(--red)' : d.severity === 'Medium' ? 'var(--yellow)' : 'var(--green)';
+  let html = `<h2>${d.issue}</h2>`;
+  html += `<p class="modal-subtitle" style="color:${sevColor}">${d.severity} Severity · ${d.age} old · ${d.screens} screens affected</p>`;
+  html += `<h3>Description</h3><p>${d.description}</p>`;
+  html += `<h3>Discovered</h3>`;
+  html += `<p><strong>${d.caughtBy}</strong> on ${d.caughtDate}</p>`;
+  html += `<h3>Impact if Unresolved</h3><p>${d.impact}</p>`;
+  modalContent.innerHTML = html;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// Delegated click handler for issue links (survives sort re-renders)
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('.issue-link[data-issue]');
+  if (link) {
+    e.preventDefault();
+    openIssueModal(link.dataset.issue);
   }
 });
