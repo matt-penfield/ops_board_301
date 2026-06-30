@@ -67,8 +67,8 @@
     </div>
     <div class="card">
       <div class="card-label">Active Requests</div>
-      <div class="card-value">24</div>
-      <div class="card-sub">6 added this week</div>
+      <div class="card-value">75</div>
+      <div class="card-sub">18 added this week</div>
     </div>
     <div class="card">
       <div class="card-label">Component Adoption</div>
@@ -77,7 +77,7 @@
     </div>
     <div class="card">
       <div class="card-label">Available Resources</div>
-      <div class="card-value">3</div>
+      <div class="card-value">9</div>
       <div class="card-sub">Designers with capacity</div>
     </div>
   </div>
@@ -99,7 +99,7 @@
   <div class="grid grid-3" style="margin-bottom:24px;">
     <div class="card">
       <div class="card-label">Overallocated</div>
-      <div class="card-value">2</div>
+      <div class="card-value">7</div>
       <div class="card-sub">Designers above 85% utilization</div>
     </div>
     <div class="card">
@@ -109,7 +109,7 @@
     </div>
     <div class="card">
       <div class="card-label">Active Projects / Designers</div>
-      <div class="card-value">24 / 8</div>
+      <div class="card-value">75 / 25</div>
       <div class="card-sub">3.0 projects per designer</div>
     </div>
   </div>
@@ -146,31 +146,56 @@
 <section class="view" id="view-pipeline">
   <div class="view-header">
     <h1>Project Pipeline</h1>
-    <p>All active design requests by status — surfaces blockers and SLA breaches at a glance.</p>
+    <p>All active design requests by status — surfaces blockers and risks at a glance.</p>
   </div>
 
   <div class="grid grid-4" style="margin-bottom:24px;">
     <div class="card">
       <div class="card-label">Queued</div>
-      <div class="card-value">5</div>
+      <div class="card-value">16</div>
     </div>
     <div class="card">
       <div class="card-label">In Progress</div>
-      <div class="card-value">10</div>
+      <div class="card-value">30</div>
     </div>
     <div class="card">
       <div class="card-label">In Review</div>
-      <div class="card-value">6</div>
+      <div class="card-value">20</div>
     </div>
     <div class="card">
       <div class="card-label">Blocked</div>
-      <div class="card-value" style="color:var(--red)">3</div>
+      <div class="card-value" style="color:var(--red)">9</div>
     </div>
   </div>
 
   <div class="section-title">
     <span class="material-symbols-outlined">view_kanban</span>
     Board
+  </div>
+  <div class="kanban-filters" id="kanban-filters">
+    <div class="filter-group">
+      <label>Risk</label>
+      <select id="filter-risk">
+        <option value="all">All</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Designer</label>
+      <select id="filter-designer">
+        <option value="all">All</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Blocked</label>
+      <select id="filter-blocked">
+        <option value="all">All</option>
+        <option value="yes">Blocked only</option>
+        <option value="no">Not blocked</option>
+      </select>
+    </div>
   </div>
   <div class="kanban" id="kanban"></div>
 </section>

@@ -1,25 +1,25 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0e0e10;
-  --surface: #1a1a1f;
-  --surface-alt: #222228;
-  --border: #2e2e35;
-  --text: #e4e4e8;
-  --text-muted: #8a8a96;
-  --accent: #7c8aff;
-  --green: #34d399;
-  --yellow: #fbbf24;
-  --red: #f87171;
-  --orange: #fb923c;
-  --radius: 10px;
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --surface-alt: #f1f3f5;
+  --border: #e2e4e9;
+  --text: #1a1a2e;
+  --text-muted: #6b7280;
+  --accent: #2563eb;
+  --green: #16a34a;
+  --yellow: #ca8a04;
+  --red: #dc2626;
+  --orange: #ea580c;
+  --radius: 8px;
 }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.6;
   min-height: 100vh;
 }
 
@@ -28,7 +28,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
+  padding: 18px 48px;
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -72,16 +72,16 @@ nav .logo .material-symbols-outlined { font-size: 22px; color: var(--accent); }
 }
 
 /* ── LAYOUT ── */
-main { padding: 28px 32px 48px; }
+main { padding: 40px 48px 64px; }
 .view { display: none; }
 .view.active { display: block; }
 .view-header {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 .view-header h1 {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 .view-header p {
   font-size: 13px;
@@ -90,7 +90,7 @@ main { padding: 28px 32px 48px; }
 }
 
 /* ── CARDS ── */
-.grid { display: grid; gap: 16px; }
+.grid { display: grid; gap: 24px; }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
@@ -99,7 +99,8 @@ main { padding: 28px 32px 48px; }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 24px 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .card-label {
   font-size: 11px;
@@ -110,8 +111,8 @@ main { padding: 28px 32px 48px; }
   margin-bottom: 8px;
 }
 .card-value {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 700;
   letter-spacing: -0.5px;
 }
 .card-sub {
@@ -135,7 +136,7 @@ main { padding: 28px 32px 48px; }
 .section-title {
   font-size: 14px;
   font-weight: 600;
-  margin: 28px 0 14px;
+  margin: 40px 0 18px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -227,19 +228,19 @@ th.sortable.desc::after {
   padding: 2px 8px;
   border-radius: 4px;
 }
-.tag-queued { background: #2e2e35; color: var(--text-muted); }
-.tag-progress { background: #1e2a4a; color: var(--accent); }
-.tag-review { background: #2d2514; color: var(--yellow); }
-.tag-done { background: #132e24; color: var(--green); }
-.tag-blocked { background: #2e1515; color: var(--red); }
+.tag-queued { background: #f1f3f5; color: var(--text-muted); }
+.tag-progress { background: #eff6ff; color: var(--accent); }
+.tag-review { background: #fefce8; color: var(--yellow); }
+.tag-done { background: #f0fdf4; color: var(--green); }
+.tag-blocked { background: #fef2f2; color: var(--red); }
 
 /* ── ATTENTION BANNER ── */
 .attention-banner {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  background: rgba(248, 113, 113, 0.06);
-  border: 1px solid rgba(248, 113, 113, 0.25);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
   border-left: 3px solid var(--red);
   border-radius: var(--radius);
   padding: 16px 20px;
@@ -315,7 +316,8 @@ th.sortable.desc::after {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px 20px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .health-card-header {
   display: flex;
@@ -367,11 +369,44 @@ th.sortable.desc::after {
   color: var(--text-muted);
 }
 
+/* ── KANBAN FILTERS ── */
+.kanban-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.filter-group label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+}
+.filter-group select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color .15s;
+}
+.filter-group select:hover { border-color: var(--accent); }
+.filter-group select:focus { border-color: var(--accent); }
+
 /* ── KANBAN ── */
 .kanban {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  gap: 20px;
 }
 .kanban-col h3 {
   font-size: 12px;
@@ -394,7 +429,7 @@ th.sortable.desc::after {
   background: var(--surface-alt);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 14px;
+  padding: 16px 18px;
   margin-bottom: 10px;
   border-left: 3px solid var(--border);
 }
@@ -413,9 +448,12 @@ th.sortable.desc::after {
   color: var(--text-muted);
   font-size: 10px;
   font-weight: 500;
-  padding: 3px 8px;
+  padding: 4px 10px;
   cursor: pointer;
   transition: border-color .15s, color .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .kanban-sort-btn:hover { border-color: var(--accent); color: var(--text); }
 .kanban-sort-btn.active { border-color: var(--accent); color: var(--accent); }
@@ -466,7 +504,7 @@ th.sortable.desc::after {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.3);
   z-index: 100;
   align-items: flex-start;
   justify-content: center;
@@ -484,6 +522,7 @@ th.sortable.desc::after {
   max-width: 1100px;
   padding: 32px;
   position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
 }
 .modal-close {
   position: absolute;

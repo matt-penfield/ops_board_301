@@ -15,10 +15,10 @@ document.getElementById('attention-dismiss').addEventListener('click', () => {
 
 // ── DOMAIN HEALTH ──
 const domainHealth = [
-  { domain: 'Project Pipeline', status: 'yellow', metric: '3', metricLabel: 'past deadline', trend: [1, 0, 2, 1, 2, 3, 3], statusText: 'Warning — trending up this week' },
-  { domain: 'Team Capacity', status: 'yellow', metric: '77%', metricLabel: 'utilized', trend: [82, 80, 76, 79, 75, 77, 77], statusText: 'Warning — 2 designers overallocated' },
+  { domain: 'Project Pipeline', status: 'yellow', metric: '9', metricLabel: 'past deadline', trend: [3, 2, 5, 4, 6, 8, 9], statusText: 'Warning — trending up this week' },
+  { domain: 'Team Capacity', status: 'yellow', metric: '77%', metricLabel: 'utilized', trend: [80, 78, 75, 77, 74, 76, 77], statusText: 'Warning — 7 designers overallocated' },
   { domain: 'Design System', status: 'green', metric: '87%', metricLabel: 'adoption', trend: [79, 81, 82, 84, 85, 86, 87], statusText: 'Healthy — adoption trending up' },
-  { domain: 'Available Resources', status: 'green', metric: '3', metricLabel: 'designers free', trend: [1, 1, 2, 2, 1, 2, 3], statusText: 'Healthy — capacity opening up' },
+  { domain: 'Available Resources', status: 'green', metric: '9', metricLabel: 'designers free', trend: [4, 4, 6, 5, 6, 7, 9], statusText: 'Healthy — capacity opening up' },
 ];
 
 function renderSparkline(data, color, width = 120, height = 28) {
@@ -39,7 +39,7 @@ function renderSparkline(data, color, width = 120, height = 28) {
 const domainHealthEl = document.getElementById('domain-health');
 domainHealth.forEach(d => {
   const dotColor = d.status === 'yellow' ? 'var(--yellow)' : d.status === 'red' ? 'var(--red)' : 'var(--green)';
-  const sparkColor = d.status === 'yellow' ? '#fbbf24' : d.status === 'red' ? '#f87171' : '#34d399';
+  const sparkColor = d.status === 'yellow' ? '#ca8a04' : d.status === 'red' ? '#dc2626' : '#16a34a';
   domainHealthEl.innerHTML += `
     <div class="health-card">
       <div class="health-card-header">
@@ -59,14 +59,31 @@ domainHealth.forEach(d => {
 
 // ── TEAM DATA ──
 const teamData = [
-  { name: 'Alex Chen',     projects: 'Checkout redesign, Mobile nav patterns',  util: 92, status: 'high', nextAvailable: '2026-07-14' },
-  { name: 'Priya Sharma',  projects: 'Onboarding flow v2, Card component variants',               util: 74, status: 'ok',   nextAvailable: '2026-07-07' },
-  { name: 'James Okafor',  projects: 'Dashboard v2 layouts, Settings page cleanup',        util: 85, status: 'ok',   nextAvailable: '2026-07-10' },
-  { name: 'Mei Lin',       projects: 'Icon library expansion, Color token update',         util: 68, status: 'ok',   nextAvailable: '2026-07-03' },
-  { name: 'Sara Müller',   projects: 'Search results page, Filter panel redesign',             util: 80, status: 'ok',   nextAvailable: '2026-07-08' },
-  { name: 'Dan Reeves',    projects: 'Notification center, Alert system design, Permissions matrix',         util: 88, status: 'high', nextAvailable: '2026-07-15' },
-  { name: 'Kim Tanaka',    projects: 'Profile edit flow, Loading skeleton specs',              util: 55, status: 'low',  nextAvailable: '2026-07-02' },
-  { name: 'Luca Bianchi',  projects: 'Data export wizard, Table pagination',              util: 72, status: 'ok',   nextAvailable: '2026-07-05' },
+  { name: 'Alex Chen',       projects: 'Checkout redesign, Mobile nav patterns',                    util: 92, status: 'high', nextAvailable: '2026-07-14' },
+  { name: 'Priya Sharma',    projects: 'Onboarding flow v2, Card component variants',              util: 74, status: 'ok',   nextAvailable: '2026-07-07' },
+  { name: 'James Okafor',    projects: 'Dashboard v2 layouts, Settings page cleanup',              util: 85, status: 'ok',   nextAvailable: '2026-07-10' },
+  { name: 'Mei Lin',         projects: 'Icon library expansion, Color token update',               util: 68, status: 'ok',   nextAvailable: '2026-07-03' },
+  { name: 'Sara Müller',     projects: 'Search results page, Filter panel redesign, Data visualization', util: 80, status: 'ok', nextAvailable: '2026-07-08' },
+  { name: 'Dan Reeves',      projects: 'Notification center, Alert system design, Permissions matrix', util: 88, status: 'high', nextAvailable: '2026-07-15' },
+  { name: 'Kim Tanaka',      projects: 'Profile edit flow, Loading skeleton specs',                util: 55, status: 'low',  nextAvailable: '2026-07-02' },
+  { name: 'Luca Bianchi',    projects: 'Data export wizard, Table pagination',                     util: 72, status: 'ok',   nextAvailable: '2026-07-05' },
+  { name: 'Maria Lopez',     projects: 'Brand refresh, Marketing landing pages, Campaign templates', util: 91, status: 'high', nextAvailable: '2026-07-18' },
+  { name: 'Sam Rivera',      projects: 'Empty states audit, Illustration library',                 util: 67, status: 'ok',   nextAvailable: '2026-07-04' },
+  { name: 'Taylor Nguyen',   projects: 'Admin portal, User management console',                    util: 86, status: 'high', nextAvailable: '2026-07-16' },
+  { name: 'Jordan Williams', projects: 'Billing page update, Payment history, Subscription management', util: 78, status: 'ok', nextAvailable: '2026-07-09' },
+  { name: 'Chris Park',      projects: 'Mobile gestures, Pull-to-refresh',                         util: 70, status: 'ok',   nextAvailable: '2026-07-04' },
+  { name: 'Aisha Patel',     projects: 'Design system v4, Component audit, Accessibility toolkit', util: 94, status: 'high', nextAvailable: '2026-07-21' },
+  { name: 'Lin Wei',         projects: 'Error message review, Form validation patterns',           util: 76, status: 'ok',   nextAvailable: '2026-07-08' },
+  { name: 'Marco Silva',     projects: 'FAQ page refresh',                                         util: 64, status: 'ok',   nextAvailable: '2026-07-03' },
+  { name: 'Dana Kim',        projects: 'Reporting dashboard, Export templates, Chart components',   util: 82, status: 'ok',   nextAvailable: '2026-07-11' },
+  { name: 'Rachel Hong',     projects: 'Collaboration tools, Comments system, Activity feed',      util: 77, status: 'ok',   nextAvailable: '2026-07-09' },
+  { name: 'Navid Rahimi',    projects: 'API documentation portal, Developer onboarding, SDK playground', util: 87, status: 'high', nextAvailable: '2026-07-17' },
+  { name: 'Sophie Chen',     projects: 'Tooltip standardization, Badge system',                    util: 69, status: 'ok',   nextAvailable: '2026-07-04' },
+  { name: 'Ben Kowalski',    projects: 'Inventory management, Product catalog, Bulk actions',      util: 79, status: 'ok',   nextAvailable: '2026-07-10' },
+  { name: 'Yuki Sato',       projects: 'Loading states',                                           util: 62, status: 'low',  nextAvailable: '2026-07-02' },
+  { name: 'Emma Torres',     projects: 'Customer portal redesign, Support ticket flow, Knowledge base', util: 90, status: 'high', nextAvailable: '2026-07-19' },
+  { name: 'Ryan O\'Brien',   projects: 'Help center redesign, Contextual tooltips',               util: 75, status: 'ok',   nextAvailable: '2026-07-07' },
+  { name: 'Nadia Hassan',    projects: 'Accessibility audit',                                      util: 56, status: 'low',  nextAvailable: '2026-07-01' },
 ];
 
 const teamTbody = document.getElementById('team-table');
@@ -160,7 +177,7 @@ document.querySelectorAll('#team-allocation-table th.sortable').forEach(th => {
 const allocationChartData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
   allocation: [68, 70, 72, 74, 76, 78, 80, 82, 79, 77, 75, 73, 74, 76, 78, 79, 78, 77],
-  requests:   [6,  7,  8,  9,  10, 12, 11, 14, 13, 12, 10, 9,  11, 12, 13, 14, 13, 14],
+  requests:   [18, 22, 25, 28, 32, 38, 35, 44, 41, 38, 32, 28, 34, 38, 42, 44, 40, 44],
 };
 
 (function renderAllocationChart() {
@@ -209,10 +226,10 @@ const allocationChartData = {
   el.innerHTML = `
     <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
       ${grid}
-      <path d="${allocArea}" fill="rgba(124,138,255,0.08)"/>
-      <path d="${allocLine}" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
-      <path d="${reqArea}" fill="rgba(251,191,36,0.06)"/>
-      <path d="${reqLine}" fill="none" stroke="var(--yellow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+      <path d="${allocArea}" fill="rgba(37,99,235,0.08)"/>
+      <path d="${allocLine}" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+      <path d="${reqArea}" fill="rgba(202,138,4,0.08)"/>
+      <path d="${reqLine}" fill="none" stroke="var(--yellow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
     </svg>
     <div class="chart-legend">
       <span class="legend-alloc">Avg Allocation %</span>
@@ -223,16 +240,27 @@ const allocationChartData = {
 // ── PIPELINE / KANBAN DATA ──
 const pipelineData = {
   queued: [
-    { title: 'Billing page update', meta: 'Req: PM — Taylor', days: 2, risk: 'low' },
-    { title: 'Empty states audit', meta: 'Req: Design — Mei', days: 1, risk: 'low' },
-    { title: 'Error message review', meta: 'Req: Eng — Navid', days: 4, risk: 'medium' },
-    { title: 'FAQ page refresh', meta: 'Req: Marketing', days: 1, risk: 'low' },
-    { title: 'Tooltip standardization', meta: 'Req: Design — Sara', days: 3, risk: 'low' },
+    { title: 'Responsive email templates', meta: 'Req: Marketing — Lisa', days: 2, risk: 'low' },
+    { title: 'Campaign templates', meta: 'Req: Marketing — Lisa', days: 1, risk: 'low' },
+    { title: 'Role configuration', meta: 'Req: Security — Ops', days: 3, risk: 'medium' },
+    { title: 'Token migration', meta: 'Req: Design System — Aisha', days: 2, risk: 'medium' },
+    { title: 'SDK playground', meta: 'Req: Eng — DevRel', days: 1, risk: 'low' },
+    { title: 'Knowledge base', meta: 'Req: Support — Ops', days: 4, risk: 'medium' },
+    { title: 'Analytics widgets', meta: 'Req: PM — Rachel', days: 2, risk: 'low' },
+    { title: 'Subscription management', meta: 'Req: PM — Jordan', days: 3, risk: 'low' },
+    { title: 'Form validation patterns', meta: 'Req: Design — Lin', days: 1, risk: 'low' },
+    { title: 'Chart components', meta: 'Req: PM — Dana', days: 2, risk: 'low' },
+    { title: 'Bulk actions', meta: 'Req: PM — Ben', days: 4, risk: 'medium' },
+    { title: 'Activity feed', meta: 'Req: PM — Rachel', days: 3, risk: 'low' },
+    { title: 'Contextual tooltips', meta: 'Req: Design — Ryan', days: 1, risk: 'low' },
+    { title: 'Illustration library', meta: 'Req: Brand — Sam', days: 2, risk: 'low' },
+    { title: 'Badge system', meta: 'Req: Design — Sophie', days: 3, risk: 'low' },
+    { title: 'Pull-to-refresh', meta: 'Req: Mobile — Chris', days: 2, risk: 'low' },
   ],
   progress: [
     { title: 'Checkout redesign', meta: 'Alex Chen — Sprint 14', days: 5, risk: 'high', riskReason: 'Revenue-critical flow, tight launch deadline' },
-    { title: 'Onboarding flow v2', meta: 'Priya Sharma — Sprint 14', days: 3, risk: 'medium' },
     { title: 'Mobile nav patterns', meta: 'Alex Chen — Sprint 14', days: 4, risk: 'medium' },
+    { title: 'Onboarding flow v2', meta: 'Priya Sharma — Sprint 14', days: 3, risk: 'medium' },
     { title: 'Dashboard v2 layouts', meta: 'James Okafor — Sprint 14', days: 6, risk: 'high', riskReason: 'Scope creep — 3 new panels added mid-sprint' },
     { title: 'Search results page', meta: 'Sara Müller — Sprint 14', days: 2, risk: 'low' },
     { title: 'Notification center', meta: 'Dan Reeves — Sprint 14', days: 3, risk: 'low' },
@@ -240,6 +268,26 @@ const pipelineData = {
     { title: 'Profile edit flow', meta: 'Kim Tanaka — Sprint 14', days: 1, risk: 'low' },
     { title: 'Settings page cleanup', meta: 'James Okafor — Sprint 14', days: 7, risk: 'high', blocked: 'Waiting on API spec' },
     { title: 'Alert system design', meta: 'Dan Reeves — Sprint 14', days: 2, risk: 'low' },
+    { title: 'Brand refresh', meta: 'Maria Lopez — Sprint 14', days: 8, risk: 'high', blocked: 'Executive feedback pending since Jun 24' },
+    { title: 'Marketing landing pages', meta: 'Maria Lopez — Sprint 14', days: 4, risk: 'medium' },
+    { title: 'Admin portal', meta: 'Taylor Nguyen — Sprint 14', days: 5, risk: 'high', blocked: 'Dependent on IAM role schema' },
+    { title: 'User management console', meta: 'Taylor Nguyen — Sprint 14', days: 3, risk: 'medium' },
+    { title: 'Design system v4', meta: 'Aisha Patel — Sprint 14', days: 9, risk: 'high', blocked: 'Waiting on breaking change approval from platform team' },
+    { title: 'Component audit', meta: 'Aisha Patel — Sprint 14', days: 2, risk: 'low' },
+    { title: 'API documentation portal', meta: 'Navid Rahimi — Sprint 14', days: 4, risk: 'low' },
+    { title: 'Developer onboarding', meta: 'Navid Rahimi — Sprint 14', days: 3, risk: 'medium' },
+    { title: 'Customer portal redesign', meta: 'Emma Torres — Sprint 14', days: 6, risk: 'high', blocked: 'Client API migration in progress' },
+    { title: 'Support ticket flow', meta: 'Emma Torres — Sprint 14', days: 3, risk: 'medium' },
+    { title: 'Billing page update', meta: 'Jordan Williams — Sprint 14', days: 2, risk: 'low' },
+    { title: 'Payment history', meta: 'Jordan Williams — Sprint 14', days: 3, risk: 'low' },
+    { title: 'Error message review', meta: 'Lin Wei — Sprint 14', days: 2, risk: 'low' },
+    { title: 'Reporting dashboard', meta: 'Dana Kim — Sprint 14', days: 5, risk: 'medium', blocked: 'Data pipeline migration pending' },
+    { title: 'Export templates', meta: 'Dana Kim — Sprint 14', days: 2, risk: 'low' },
+    { title: 'Inventory management', meta: 'Ben Kowalski — Sprint 14', days: 4, risk: 'medium' },
+    { title: 'Product catalog', meta: 'Ben Kowalski — Sprint 14', days: 3, risk: 'low' },
+    { title: 'Collaboration tools', meta: 'Rachel Hong — Sprint 14', days: 4, risk: 'medium', blocked: 'Eng team reassigned to incident' },
+    { title: 'Help center redesign', meta: 'Ryan O\'Brien — Sprint 14', days: 3, risk: 'low' },
+    { title: 'Data visualization', meta: 'Sara Müller — Sprint 14', days: 4, risk: 'medium' },
   ],
   review: [
     { title: 'Icon library expansion', meta: 'Mei Lin — Review by leads', days: 3, risk: 'low' },
@@ -248,11 +296,31 @@ const pipelineData = {
     { title: 'Loading skeleton specs', meta: 'Kim Tanaka — PM review', days: 4, risk: 'medium' },
     { title: 'Table pagination', meta: 'Luca Bianchi — Eng review', days: 2, risk: 'low' },
     { title: 'Filter panel redesign', meta: 'Sara Müller — PM review', days: 5, risk: 'high', blocked: 'PM unavailable' },
+    { title: 'Empty states audit', meta: 'Sam Rivera — Design review', days: 2, risk: 'low' },
+    { title: 'FAQ page refresh', meta: 'Marco Silva — PM review', days: 3, risk: 'low' },
+    { title: 'Tooltip standardization', meta: 'Sophie Chen — Design review', days: 2, risk: 'low' },
+    { title: 'Loading states', meta: 'Yuki Sato — Eng review', days: 1, risk: 'low' },
+    { title: 'Mobile gestures', meta: 'Chris Park — Eng review', days: 3, risk: 'medium' },
+    { title: 'Accessibility audit', meta: 'Nadia Hassan — Lead review', days: 4, risk: 'medium' },
+    { title: 'Comments system', meta: 'Rachel Hong — Eng review', days: 2, risk: 'low' },
+    { title: 'Accessibility toolkit', meta: 'Aisha Patel — Lead review', days: 3, risk: 'medium' },
+    { title: 'Permissions matrix', meta: 'Dan Reeves — Security review', days: 5, risk: 'high', blocked: 'Dependency on IAM team' },
+    { title: 'Inventory pricing', meta: 'Ben Kowalski — PM review', days: 2, risk: 'low' },
+    { title: 'Onboarding metrics', meta: 'Priya Sharma — PM review', days: 1, risk: 'low' },
+    { title: 'Notification preferences', meta: 'Dan Reeves — PM review', days: 2, risk: 'low' },
+    { title: 'Admin analytics', meta: 'Taylor Nguyen — PM review', days: 3, risk: 'medium' },
+    { title: 'Portal navigation', meta: 'Emma Torres — UX review', days: 2, risk: 'low' },
   ],
   blocked: [
     { title: 'Settings page cleanup', meta: 'James Okafor', days: 7, risk: 'high', blocked: 'Waiting on API spec' },
     { title: 'Filter panel redesign', meta: 'Sara Müller', days: 5, risk: 'high', blocked: 'PM unavailable for review' },
     { title: 'Permissions matrix', meta: 'Dan Reeves', days: 9, risk: 'high', blocked: 'Dependency on IAM team' },
+    { title: 'Design system v4', meta: 'Aisha Patel', days: 9, risk: 'high', blocked: 'Waiting on breaking change approval from platform team' },
+    { title: 'Customer portal redesign', meta: 'Emma Torres', days: 6, risk: 'high', blocked: 'Client API migration in progress' },
+    { title: 'Brand refresh', meta: 'Maria Lopez', days: 8, risk: 'high', blocked: 'Executive feedback pending since Jun 24' },
+    { title: 'Admin portal', meta: 'Taylor Nguyen', days: 5, risk: 'high', blocked: 'Dependent on IAM role schema' },
+    { title: 'Collaboration tools', meta: 'Rachel Hong', days: 4, risk: 'medium', blocked: 'Eng team reassigned to incident' },
+    { title: 'Reporting dashboard', meta: 'Dana Kim', days: 5, risk: 'medium', blocked: 'Data pipeline migration pending' },
   ],
 };
 
@@ -272,10 +340,42 @@ function riskColor(risk) {
 
 const kanbanSortState = {};
 
+// Populate designer filter dropdown
+const designerSelect = document.getElementById('filter-designer');
+const allDesigners = new Set();
+Object.values(pipelineData).forEach(items => {
+  items.forEach(item => {
+    const name = item.meta.split(' — ')[0].replace('Req: ', '');
+    allDesigners.add(name);
+  });
+});
+[...allDesigners].sort().forEach(name => {
+  designerSelect.innerHTML += `<option value="${name}">${name}</option>`;
+});
+
+function getActiveFilters() {
+  return {
+    risk: document.getElementById('filter-risk').value,
+    designer: document.getElementById('filter-designer').value,
+    blocked: document.getElementById('filter-blocked').value,
+  };
+}
+
+function applyFilters(items) {
+  const f = getActiveFilters();
+  return items.filter(item => {
+    if (f.risk !== 'all' && item.risk !== f.risk) return false;
+    if (f.designer !== 'all' && !item.meta.includes(f.designer)) return false;
+    if (f.blocked === 'yes' && !item.blocked) return false;
+    if (f.blocked === 'no' && item.blocked) return false;
+    return true;
+  });
+}
+
 function renderKanban() {
   kanbanEl.innerHTML = '';
   cols.forEach(col => {
-    let items = [...pipelineData[col.key]];
+    let items = applyFilters([...pipelineData[col.key]]);
     const sort = kanbanSortState[col.key];
     if (sort) {
       items.sort((a, b) => {
@@ -292,8 +392,7 @@ function renderKanban() {
     let html = `<div class="kanban-col" data-col="${col.key}">`;
     html += `<h3>${col.label} <span class="count">${items.length}</span></h3>`;
     html += `<div class="kanban-sort-bar">`;
-    html += `<button class="kanban-sort-btn${sort && sort.key === 'risk' ? ' active' : ''}" data-col="${col.key}" data-sort="risk">Risk${sort && sort.key === 'risk' ? (sort.dir === 'asc' ? ' ↑' : ' ↓') : ''}</button>`;
-    html += `<button class="kanban-sort-btn${sort && sort.key === 'days' ? ' active' : ''}" data-col="${col.key}" data-sort="days">Days${sort && sort.key === 'days' ? (sort.dir === 'asc' ? ' ↑' : ' ↓') : ''}</button>`;
+    html += `<button class="kanban-sort-btn${sort && sort.key === 'risk' ? ' active' : ''}" data-col="${col.key}" data-sort="risk"><span class="material-symbols-outlined" style="font-size:12px">sort</span> Sort by Risk${sort && sort.key === 'risk' ? (sort.dir === 'asc' ? ' ↑' : ' ↓') : ''}</button>`;
     html += `</div>`;
     items.forEach(item => {
       let alert = '';
@@ -313,6 +412,11 @@ function renderKanban() {
   });
 }
 renderKanban();
+
+// Filter change handlers
+document.getElementById('filter-risk').addEventListener('change', renderKanban);
+document.getElementById('filter-designer').addEventListener('change', renderKanban);
+document.getElementById('filter-blocked').addEventListener('change', renderKanban);
 
 // Delegated sort button handler
 kanbanEl.addEventListener('click', (e) => {
