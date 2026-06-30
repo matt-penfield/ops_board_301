@@ -25,10 +25,11 @@ teamData.forEach(d => {
   const color = d.util > 85 ? 'var(--yellow)' : d.util < 60 ? 'var(--text-muted)' : 'var(--accent)';
   const label = d.util > 85 ? 'Over-allocated' : d.util < 60 ? 'Available' : 'On track';
   const labelColor = d.util > 85 ? 'var(--yellow)' : d.util < 60 ? 'var(--green)' : 'var(--text-muted)';
+  const projectLinks = d.projects.split(', ').map(p => `<a class="project-link" data-project="${p}">${p}</a>`).join(', ');
   teamTbody.innerHTML += `
     <tr>
       <td style="font-weight:500">${d.name}</td>
-      <td style="color:var(--text-muted)">${d.projects}</td>
+      <td>${projectLinks}</td>
       <td>
         <div style="display:flex;align-items:center;gap:10px">
           <div class="bar-container" style="flex:1">
@@ -51,10 +52,11 @@ function renderTeamTable(data) {
     const color = d.util > 85 ? 'var(--yellow)' : d.util < 60 ? 'var(--text-muted)' : 'var(--accent)';
     const label = d.util > 85 ? 'Over-allocated' : d.util < 60 ? 'Available' : 'On track';
     const labelColor = d.util > 85 ? 'var(--yellow)' : d.util < 60 ? 'var(--green)' : 'var(--text-muted)';
+    const projectLinks = d.projects.split(', ').map(p => `<a class="project-link" data-project="${p}">${p}</a>`).join(', ');
     teamTbody.innerHTML += `
       <tr>
         <td style="font-weight:500">${d.name}</td>
-        <td style="color:var(--text-muted)">${d.projects}</td>
+        <td>${projectLinks}</td>
         <td>
           <div style="display:flex;align-items:center;gap:10px">
             <div class="bar-container" style="flex:1">
@@ -542,4 +544,13 @@ document.querySelectorAll('.kanban-card[data-project]').forEach(card => {
   card.addEventListener('click', () => {
     openProjectModal(card.dataset.project);
   });
+});
+
+// Attach click handlers to project links (delegated for sorting re-renders)
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('.project-link[data-project]');
+  if (link) {
+    e.preventDefault();
+    openProjectModal(link.dataset.project);
+  }
 });
