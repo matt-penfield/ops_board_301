@@ -13,7 +13,7 @@ const domainHealth = [
   { domain: 'Project Pipeline', status: 'yellow', metric: '3', metricLabel: 'past SLA', trend: [1, 0, 2, 1, 2, 3, 3], statusText: 'Warning — trending up this week' },
   { domain: 'Team Capacity', status: 'green', metric: '78%', metricLabel: 'utilized', trend: [82, 80, 76, 79, 75, 77, 78], statusText: 'Healthy — no overloaded designers' },
   { domain: 'Design System', status: 'green', metric: '87%', metricLabel: 'adoption', trend: [79, 81, 82, 84, 85, 86, 87], statusText: 'Healthy — adoption trending up' },
-  { domain: 'Handoff & Delivery', status: 'green', metric: '2.4d', metricLabel: 'avg handoff', trend: [3.1, 2.8, 2.9, 2.6, 2.5, 2.3, 2.4], statusText: 'Healthy — average under target' },
+  { domain: 'Available Resources', status: 'green', metric: '3', metricLabel: 'designers free', trend: [1, 1, 2, 2, 1, 2, 3], statusText: 'Healthy — capacity opening up' },
 ];
 
 function renderSparkline(data, color, width = 120, height = 28) {
