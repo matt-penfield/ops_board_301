@@ -8,6 +8,50 @@ document.querySelectorAll('.nav-tabs button').forEach(btn => {
   });
 });
 
+// ── DOMAIN HEALTH ──
+const domainHealth = [
+  { domain: 'Project Pipeline', status: 'yellow', metric: '3', metricLabel: 'past SLA', trend: [1, 0, 2, 1, 2, 3, 3], statusText: 'Warning — trending up this week' },
+  { domain: 'Team Capacity', status: 'green', metric: '78%', metricLabel: 'utilized', trend: [82, 80, 76, 79, 75, 77, 78], statusText: 'Healthy — no overloaded designers' },
+  { domain: 'Design System', status: 'green', metric: '87%', metricLabel: 'adoption', trend: [79, 81, 82, 84, 85, 86, 87], statusText: 'Healthy — adoption trending up' },
+  { domain: 'Handoff & Delivery', status: 'green', metric: '2.4d', metricLabel: 'avg handoff', trend: [3.1, 2.8, 2.9, 2.6, 2.5, 2.3, 2.4], statusText: 'Healthy — average under target' },
+];
+
+function renderSparkline(data, color, width = 120, height = 28) {
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const padding = 2;
+  const points = data.map((v, i) => {
+    const x = padding + (i / (data.length - 1)) * (width - padding * 2);
+    const y = padding + (1 - (v - min) / range) * (height - padding * 2);
+    return `${x},${y}`;
+  }).join(' ');
+  return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="${points}" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>`;
+}
+
+const domainHealthEl = document.getElementById('domain-health');
+domainHealth.forEach(d => {
+  const dotColor = d.status === 'yellow' ? 'var(--yellow)' : d.status === 'red' ? 'var(--red)' : 'var(--green)';
+  const sparkColor = d.status === 'yellow' ? '#fbbf24' : d.status === 'red' ? '#f87171' : '#34d399';
+  domainHealthEl.innerHTML += `
+    <div class="health-card">
+      <div class="health-card-header">
+        <span class="status-dot" style="background:${dotColor}"></span>
+        <span class="hc-domain">${d.domain}</span>
+      </div>
+      <div class="health-card-body">
+        <div class="health-card-metric">
+          <span class="hc-value">${d.metric}</span>
+          <span class="hc-label">${d.metricLabel}</span>
+        </div>
+        <div class="health-card-sparkline">${renderSparkline(d.trend, sparkColor)}</div>
+      </div>
+      <div class="health-card-status">${d.statusText}</div>
+    </div>`;
+});
+
 // ── TEAM DATA ──
 const teamData = [
   { name: 'Alex Chen',     projects: 'Checkout redesign, Mobile nav',  util: 92, status: 'high', nextAvailable: '2026-07-14' },

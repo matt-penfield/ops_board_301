@@ -231,22 +231,61 @@ th.sortable.desc::after {
 .tag-done { background: #132e24; color: var(--green); }
 .tag-blocked { background: #2e1515; color: var(--red); }
 
-/* ── OVERVIEW HEALTH ROWS ── */
-.health-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
+/* ── DOMAIN HEALTH CARDS ── */
+.health-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
 }
-.health-row:last-child { border-bottom: none; }
-.health-label { flex: 1; font-size: 14px; font-weight: 500; }
-.health-status {
-  font-size: 12px;
-  font-weight: 500;
+.health-card-header {
   display: flex;
   align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.health-card-header .status-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.health-card-header .hc-domain {
+  font-size: 13px;
+  font-weight: 600;
+}
+.health-card-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.health-card-metric {
+  display: flex;
+  align-items: baseline;
   gap: 6px;
+  flex-shrink: 0;
+}
+.health-card-metric .hc-value {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+.health-card-metric .hc-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.health-card-sparkline {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.health-card-sparkline svg {
+  display: block;
+}
+.health-card-status {
+  font-size: 12px;
+  color: var(--text-muted);
 }
 
 /* ── KANBAN ── */
