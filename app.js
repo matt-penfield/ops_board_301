@@ -247,22 +247,22 @@ const allocationChartData = {
 // ── PIPELINE / KANBAN DATA ──
 const pipelineData = {
   queued: [
-    { title: 'Responsive email templates', meta: 'Req: Marketing — Lisa', days: 2, risk: 'low' },
-    { title: 'Campaign templates', meta: 'Req: Marketing — Lisa', days: 1, risk: 'low' },
-    { title: 'Role configuration', meta: 'Req: Security — Ops', days: 3, risk: 'medium' },
-    { title: 'Token migration', meta: 'Req: Design System — Aisha', days: 2, risk: 'medium' },
-    { title: 'SDK playground', meta: 'Req: Eng — DevRel', days: 1, risk: 'low' },
-    { title: 'Knowledge base', meta: 'Req: Support — Ops', days: 4, risk: 'medium' },
-    { title: 'Analytics widgets', meta: 'Req: PM — Rachel', days: 2, risk: 'low' },
-    { title: 'Subscription management', meta: 'Req: PM — Jordan', days: 3, risk: 'low' },
-    { title: 'Form validation patterns', meta: 'Req: Design — Lin', days: 1, risk: 'low' },
-    { title: 'Chart components', meta: 'Req: PM — Dana', days: 2, risk: 'low' },
-    { title: 'Bulk actions', meta: 'Req: PM — Ben', days: 4, risk: 'medium' },
-    { title: 'Activity feed', meta: 'Req: PM — Rachel', days: 3, risk: 'low' },
-    { title: 'Contextual tooltips', meta: 'Req: Design — Ryan', days: 1, risk: 'low' },
-    { title: 'Illustration library', meta: 'Req: Brand — Sam', days: 2, risk: 'low' },
-    { title: 'Badge system', meta: 'Req: Design — Sophie', days: 3, risk: 'low' },
-    { title: 'Pull-to-refresh', meta: 'Req: Mobile — Chris', days: 2, risk: 'low' },
+    { title: 'Responsive email templates', meta: 'Requester: Marketing — Lisa', days: 2, risk: 'low' },
+    { title: 'Campaign templates', meta: 'Requester: Marketing — Lisa', days: 1, risk: 'low' },
+    { title: 'Role configuration', meta: 'Requester: Security — Ops', days: 3, risk: 'medium' },
+    { title: 'Token migration', meta: 'Requester: Design System — Aisha', days: 2, risk: 'medium' },
+    { title: 'SDK playground', meta: 'Requester: Eng — DevRel', days: 1, risk: 'low' },
+    { title: 'Knowledge base', meta: 'Requester: Support — Ops', days: 4, risk: 'medium' },
+    { title: 'Analytics widgets', meta: 'Requester: PM — Rachel', days: 2, risk: 'low' },
+    { title: 'Subscription management', meta: 'Requester: PM — Jordan', days: 3, risk: 'low' },
+    { title: 'Form validation patterns', meta: 'Requester: Design — Lin', days: 1, risk: 'low' },
+    { title: 'Chart components', meta: 'Requester: PM — Dana', days: 2, risk: 'low' },
+    { title: 'Bulk actions', meta: 'Requester: PM — Ben', days: 4, risk: 'medium' },
+    { title: 'Activity feed', meta: 'Requester: PM — Rachel', days: 3, risk: 'low' },
+    { title: 'Contextual tooltips', meta: 'Requester: Design — Ryan', days: 1, risk: 'low' },
+    { title: 'Illustration library', meta: 'Requester: Brand — Sam', days: 2, risk: 'low' },
+    { title: 'Badge system', meta: 'Requester: Design — Sophie', days: 3, risk: 'low' },
+    { title: 'Pull-to-refresh', meta: 'Requester: Mobile — Chris', days: 2, risk: 'low' },
   ],
   progress: [
     { title: 'Checkout redesign', meta: 'Alex Chen — Sprint 14', days: 5, risk: 'high', riskReason: 'Revenue-critical flow, tight launch deadline' },
@@ -352,7 +352,7 @@ const designerSelect = document.getElementById('filter-designer');
 const allDesigners = new Set();
 Object.values(pipelineData).forEach(items => {
   items.forEach(item => {
-    const name = item.meta.split(' — ')[0].replace('Req: ', '');
+    const name = item.meta.split(' — ')[0].replace('Requester: ', '');
     allDesigners.add(name);
   });
 });
