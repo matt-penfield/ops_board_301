@@ -352,7 +352,8 @@ const designerSelect = document.getElementById('filter-designer');
 const allDesigners = new Set();
 Object.values(pipelineData).forEach(items => {
   items.forEach(item => {
-    const name = item.meta.split(' — ')[0].replace('Requester: ', '');
+    if (item.meta.startsWith('Requester:')) return;
+    const name = item.meta.split(' — ')[0];
     allDesigners.add(name);
   });
 });
@@ -760,6 +761,373 @@ const projectDetails = {
       engineering: [{ name: 'Chris Park', role: 'Frontend' }],
       pm: [{ name: 'Marco Silva', role: 'Product Manager' }],
       decisionMakers: [{ name: 'Marco Silva', role: 'Approver' }],
+    },
+  },
+  'Brand refresh': {
+    overview: 'Comprehensive visual identity update across all digital touchpoints — color palette evolution, typography refresh, and updated illustration style to reflect the company\'s new positioning.',
+    goal: 'Roll out refreshed brand across all product surfaces within Q3, achieving 100% asset replacement with zero regressions in accessibility scores.',
+    metrics: ['Asset replacement coverage', 'Brand consistency audit score', 'Accessibility compliance rate', 'Stakeholder approval cycle time'],
+    raid: [
+      { issue: 'Executive feedback pending', desc: 'VP Marketing and CEO have not provided final sign-off on the updated color palette since Jun 24. Blocking production asset generation.', severity: 'High', mitigation: 'Escalate through design director. Prepare two finalist options for rapid decision meeting. Identify interim palette that can ship without full sign-off.', logged: '2026-06-24', needed: '2026-06-30', resolved: '', owner: 'Maria Lopez' },
+      { issue: 'Dark mode contrast ratios', desc: 'New brand blue fails WCAG AA on dark backgrounds at proposed weight.', severity: 'Medium', mitigation: 'Test adjusted tint values. Prepare light-mode-only launch option if dark mode adjustments delay timeline.', logged: '2026-06-20', needed: '2026-07-05', resolved: '', owner: 'Maria Lopez' },
+    ],
+    decisions: [
+      { name: 'Evolutionary (not revolutionary) rebrand', desc: 'Preserve brand recognition — refine, don\'t replace. Focus on modernization within existing brand architecture.', artifacts: 'FigJam: Brand Evolution Moodboard, Figma: Color Palette Candidates', needed: '2026-06-10', resolved: '2026-06-12', owner: 'CMO' },
+    ],
+    platforms: { design: 'Figma (brand library & token definitions)', research: 'Brand perception survey (Typeform), A/B landing page tests', engineering: 'Design tokens (Style Dictionary), CSS custom properties' },
+    contacts: {
+      ux: [{ name: 'Maria Lopez', role: 'Lead Designer' }],
+      engineering: [{ name: 'Sam Torres', role: 'Frontend — Token integration' }],
+      pm: [{ name: 'Rachel Hong', role: 'Brand PM' }],
+      decisionMakers: [{ name: 'CMO', role: 'Final approver' }, { name: 'VP Marketing', role: 'Brand direction' }],
+    },
+  },
+  'Marketing landing pages': {
+    overview: 'Design a set of modular, conversion-optimized landing page templates for marketing campaigns. Templates should support multiple layouts and be easily customizable by the marketing team.',
+    goal: 'Deliver 5 reusable landing page templates that increase campaign conversion rates by 15% and reduce marketing design requests by 40%.',
+    metrics: ['Campaign conversion rate', 'Template reuse rate', 'Time to launch new campaign', 'Marketing design request volume'],
+    raid: [
+      { issue: 'Brand refresh dependency', desc: 'Landing pages should use new brand assets, but brand refresh approval is delayed.', severity: 'Medium', mitigation: 'Build templates with token-based theming so brand swap is a config change. Proceed with current brand as fallback.', logged: '2026-06-22', needed: '2026-07-05', resolved: '', owner: 'Maria Lopez' },
+    ],
+    decisions: [
+      { name: 'Modular section-based templates', desc: 'Templates composed of stackable sections (hero, features, testimonials, CTA) rather than fixed layouts.', artifacts: 'Figma: Landing Page Section Library, FigJam: Template Architecture', needed: '2026-06-16', resolved: '2026-06-18', owner: 'Maria Lopez' },
+    ],
+    platforms: { design: 'Figma (template library)', research: 'Hotjar (heatmaps on existing pages), Google Optimize (A/B)', engineering: 'Next.js, Contentful CMS, Tailwind' },
+    contacts: {
+      ux: [{ name: 'Maria Lopez', role: 'Lead Designer' }],
+      engineering: [{ name: 'Lin Wei', role: 'Frontend' }],
+      pm: [{ name: 'Rachel Hong', role: 'Marketing PM' }],
+      decisionMakers: [{ name: 'VP Marketing', role: 'Approver' }],
+    },
+  },
+  'Admin portal': {
+    overview: 'Design a comprehensive admin portal for workspace management — user provisioning, billing administration, audit logs, and integration management in a unified console.',
+    goal: 'Consolidate 6 separate admin tools into a single portal, reducing admin task time by 50% and eliminating context-switching between systems.',
+    metrics: ['Admin task completion time', 'Tool consolidation (6→1)', 'Admin satisfaction score', 'Support escalations from admins'],
+    raid: [
+      { issue: 'IAM role schema dependency', desc: 'Portal requires the new identity and access management role schema which is still being finalized by the platform team.', severity: 'High', mitigation: 'Design against proposed schema v2 draft. Maintain flexibility for field additions. Attend weekly IAM syncs and flag blockers to engineering director.', logged: '2026-06-12', needed: '2026-06-25', resolved: '', owner: 'Taylor Nguyen' },
+      { issue: 'Audit log data model', desc: 'Audit events are inconsistently structured across services, complicating the unified log view.', severity: 'Medium', mitigation: 'Design filterable log with graceful handling of missing fields. Propose minimum event schema to eng.', logged: '2026-06-18', needed: '2026-07-08', resolved: '', owner: 'Taylor Nguyen' },
+    ],
+    decisions: [
+      { name: 'Left-nav console layout', desc: 'Adopted a persistent left navigation with collapsible sections for each admin domain (Users, Billing, Logs, Integrations).', artifacts: 'Figma: Admin Portal IA, FigJam: Admin Workflow Maps', needed: '2026-06-10', resolved: '2026-06-12', owner: 'Taylor Nguyen' },
+    ],
+    platforms: { design: 'Figma (enterprise patterns)', research: 'Admin interviews (5 participants), card sort (Optimal Workshop)', engineering: 'React, GraphQL, Custom IAM API' },
+    contacts: {
+      ux: [{ name: 'Taylor Nguyen', role: 'Lead Designer' }],
+      engineering: [{ name: 'Jordan Lee', role: 'IAM Backend' }, { name: 'Navid Rahimi', role: 'Frontend' }],
+      pm: [{ name: 'Marco Silva', role: 'Platform PM' }],
+      decisionMakers: [{ name: 'Dir. of Engineering', role: 'Technical approver' }, { name: 'CISO', role: 'Security approver' }],
+    },
+  },
+  'User management console': {
+    overview: 'Design the user management section of the admin portal — bulk user operations, role assignment interface, invitation flows, and user status management.',
+    goal: 'Enable admins to manage users 3x faster than current workflow and support bulk operations for teams of 500+ users.',
+    metrics: ['Bulk operation completion rate', 'Time to provision new user', 'Role assignment accuracy', 'Admin efficiency score'],
+    raid: [
+      { issue: 'Bulk operation performance', desc: 'Applying role changes to 500+ users simultaneously may exceed API rate limits.', severity: 'Medium', mitigation: 'Design progress indicator for bulk ops with queued processing. Add confirmation step showing affected user count. Coordinate with eng on batch endpoints.', logged: '2026-06-20', needed: '2026-07-05', resolved: '', owner: 'Taylor Nguyen' },
+    ],
+    decisions: [
+      { name: 'Table-based management with inline actions', desc: 'Users displayed in a sortable/filterable table with inline role editing and bulk selection checkboxes.', artifacts: 'Figma: User Table Interactions, FigJam: Admin User Flows', needed: '2026-06-14', resolved: '2026-06-16', owner: 'Taylor Nguyen' },
+    ],
+    platforms: { design: 'Figma (table components & bulk action patterns)', research: 'Competitive audit (Okta, Auth0, WorkOS dashboards)', engineering: 'React, REST API, WebSocket (real-time status)' },
+    contacts: {
+      ux: [{ name: 'Taylor Nguyen', role: 'Lead Designer' }],
+      engineering: [{ name: 'Jordan Lee', role: 'Backend' }, { name: 'Sam Torres', role: 'Frontend' }],
+      pm: [{ name: 'Marco Silva', role: 'Platform PM' }],
+      decisionMakers: [{ name: 'Marco Silva', role: 'Approver' }],
+    },
+  },
+  'Design system v4': {
+    overview: 'Major version update to the design system — introduce semantic token layers, component API redesign, improved theming architecture, and comprehensive documentation overhaul.',
+    goal: 'Ship v4 with zero breaking changes unaccounted for, achieve 90% team adoption within 4 weeks of release, and reduce component customization overrides by 60%.',
+    metrics: ['Team adoption rate (4-week)', 'Breaking change incidents', 'Component override frequency', 'Documentation coverage score'],
+    raid: [
+      { issue: 'Breaking change approval pending', desc: 'Platform team has not approved the proposed breaking changes to token naming and component prop APIs. Blocks migration guide authoring.', severity: 'High', mitigation: 'Present impact analysis at next platform review. Prepare backward-compatible shim layer as fallback. Document all breaks with automated codemods.', logged: '2026-06-10', needed: '2026-06-22', resolved: '', owner: 'Aisha Patel' },
+      { issue: 'Token migration complexity', desc: '340+ tokens need remapping from flat to semantic hierarchy. Risk of visual regressions in consuming products.', severity: 'High', mitigation: 'Build automated token migration script. Create visual regression test suite. Phase rollout by product area.', logged: '2026-06-14', needed: '2026-07-01', resolved: '', owner: 'Aisha Patel' },
+    ],
+    decisions: [
+      { name: 'Three-tier token architecture', desc: 'Adopted Global → Alias → Component token layers for maximum flexibility and themability.', artifacts: 'Figma: Token Architecture Diagram, FigJam: Token Naming Workshop Output', needed: '2026-06-05', resolved: '2026-06-07', owner: 'Aisha Patel' },
+    ],
+    platforms: { design: 'Figma (token plugin + component library)', research: 'Internal team survey, system usability testing', engineering: 'Style Dictionary, Storybook, React, Web Components' },
+    contacts: {
+      ux: [{ name: 'Aisha Patel', role: 'Design System Lead' }],
+      engineering: [{ name: 'Navid Rahimi', role: 'Frontend Architect' }, { name: 'Lin Wei', role: 'Token Tooling' }],
+      pm: [{ name: 'Rachel Hong', role: 'Platform PM' }],
+      decisionMakers: [{ name: 'Head of Design', role: 'System governance' }, { name: 'Dir. of Engineering', role: 'Technical approver' }],
+    },
+  },
+  'Component audit': {
+    overview: 'Systematic audit of all existing design system components — identify inconsistencies, deprecated patterns, undocumented variants, and accessibility gaps across the library.',
+    goal: 'Produce a prioritized remediation backlog and achieve 100% documentation coverage for all actively used components.',
+    metrics: ['Components audited', 'Issues identified', 'Documentation coverage', 'Accessibility compliance rate'],
+    raid: [
+      { issue: 'Audit scope larger than estimated', desc: 'Library contains 180+ components vs. estimated 120. Timeline may need extension.', severity: 'Low', mitigation: 'Prioritize top-50 most-used components first. Batch remaining into Phase 2. Use automated tooling where possible.', logged: '2026-06-22', needed: '2026-07-10', resolved: '', owner: 'Aisha Patel' },
+    ],
+    decisions: [
+      { name: 'Usage-based audit priority', desc: 'Audit order determined by Figma analytics — most-inserted components reviewed first.', artifacts: 'Figma: Component Usage Report, Spreadsheet: Audit Tracker', needed: '2026-06-20', resolved: '2026-06-21', owner: 'Aisha Patel' },
+    ],
+    platforms: { design: 'Figma (library analytics + audit annotations)', research: 'Internal design team feedback survey', engineering: 'Storybook (component catalog), axe-core (a11y testing)' },
+    contacts: {
+      ux: [{ name: 'Aisha Patel', role: 'Design System Lead' }],
+      engineering: [{ name: 'Lin Wei', role: 'Component Dev' }],
+      pm: [{ name: 'Rachel Hong', role: 'Platform PM' }],
+      decisionMakers: [{ name: 'Head of Design', role: 'Governance' }],
+    },
+  },
+  'API documentation portal': {
+    overview: 'Design a developer-facing documentation portal with interactive API references, code examples, authentication guides, and sandbox environments.',
+    goal: 'Reduce developer onboarding time by 40% and decrease API-related support tickets by 50% within 3 months of launch.',
+    metrics: ['Developer onboarding time', 'API support tickets', 'Documentation page views', 'Sandbox usage rate'],
+    raid: [
+      { issue: 'OpenAPI spec coverage gaps', desc: 'Several endpoints lack complete OpenAPI specifications, limiting auto-generated docs.', severity: 'Low', mitigation: 'Identify gaps and flag to backend teams. Design manual documentation fallback for undocumented endpoints.', logged: '2026-06-18', needed: '2026-07-10', resolved: '', owner: 'Navid Rahimi' },
+    ],
+    decisions: [
+      { name: 'Three-panel layout', desc: 'Adopted navigation/content/code-example three-panel layout following industry standard (Stripe, Twilio).', artifacts: 'Figma: API Docs Layout, FigJam: Developer Portal Competitive Audit', needed: '2026-06-12', resolved: '2026-06-14', owner: 'Navid Rahimi' },
+    ],
+    platforms: { design: 'Figma (portal design + code snippet styling)', research: 'Developer interviews (6 participants), competitive analysis', engineering: 'Next.js, MDX, Swagger/OpenAPI, Sandpack (live code)' },
+    contacts: {
+      ux: [{ name: 'Navid Rahimi', role: 'Lead Designer' }],
+      engineering: [{ name: 'Lin Wei', role: 'Backend' }, { name: 'Chris Park', role: 'Frontend' }],
+      pm: [{ name: 'Marco Silva', role: 'Developer Experience PM' }],
+      decisionMakers: [{ name: 'Dir. of Engineering', role: 'Approver' }],
+    },
+  },
+  'Developer onboarding': {
+    overview: 'Design the getting-started experience for new developers integrating with the platform — interactive setup wizard, quickstart guides, and environment configuration flows.',
+    goal: 'Get developers from signup to first successful API call in under 10 minutes, with 80%+ completion rate on the quickstart flow.',
+    metrics: ['Time to first API call', 'Quickstart completion rate', 'Setup wizard abandonment', 'Developer activation (7-day)'],
+    raid: [
+      { issue: 'SDK version fragmentation', desc: 'Three SDK versions in production create confusion about which quickstart to show new developers.', severity: 'Medium', mitigation: 'Design version selector at start of flow. Default to latest stable. Add clear deprecation notices for older versions.', logged: '2026-06-16', needed: '2026-07-01', resolved: '', owner: 'Navid Rahimi' },
+    ],
+    decisions: [
+      { name: 'Interactive tutorial over static docs', desc: 'Adopted step-by-step interactive tutorial with real API responses rather than copy-paste documentation.', artifacts: 'Figma: Onboarding Wizard Flow, FigJam: Developer Journey Map', needed: '2026-06-10', resolved: '2026-06-12', owner: 'Navid Rahimi' },
+    ],
+    platforms: { design: 'Figma (wizard flow + code editor styling)', research: 'Developer usability testing (5 sessions), Maze prototype test', engineering: 'Next.js, Sandpack, Node.js SDK' },
+    contacts: {
+      ux: [{ name: 'Navid Rahimi', role: 'Lead Designer' }],
+      engineering: [{ name: 'Sam Torres', role: 'Frontend' }, { name: 'Jordan Lee', role: 'SDK team' }],
+      pm: [{ name: 'Marco Silva', role: 'Developer Experience PM' }],
+      decisionMakers: [{ name: 'Marco Silva', role: 'Approver' }],
+    },
+  },
+  'Customer portal redesign': {
+    overview: 'Redesign the customer-facing self-service portal — account management, support access, subscription controls, and usage analytics presented in a unified, modern interface.',
+    goal: 'Increase portal self-service resolution rate to 75% (from 52%) and reduce live support contacts by 30%.',
+    metrics: ['Self-service resolution rate', 'Live support contact reduction', 'Portal NPS', 'Feature discoverability score'],
+    raid: [
+      { issue: 'Client API migration in progress', desc: 'Backend team is migrating the customer data API to a new service. Schema changes are ongoing and may affect portal data display.', severity: 'High', mitigation: 'Design with data abstraction layer — use placeholder patterns for fields that may change. Get weekly schema update from migration lead. Build fallback for missing data fields.', logged: '2026-06-14', needed: '2026-06-28', resolved: '', owner: 'Emma Torres' },
+      { issue: 'SSO integration timeline', desc: 'Enterprise SSO for portal access depends on identity team\'s Q3 roadmap.', severity: 'Medium', mitigation: 'Design email/password auth as baseline. Add SSO as progressive enhancement. Confirm identity team timeline.', logged: '2026-06-20', needed: '2026-07-15', resolved: '', owner: 'Emma Torres' },
+    ],
+    decisions: [
+      { name: 'Dashboard-first information architecture', desc: 'Portal opens to a personalized dashboard with key metrics and action items rather than a navigation menu.', artifacts: 'Figma: Portal Dashboard Concept, FigJam: Customer Journey Map', needed: '2026-06-08', resolved: '2026-06-10', owner: 'Emma Torres' },
+    ],
+    platforms: { design: 'Figma (responsive portal design)', research: 'Customer interviews (8 participants), Hotjar (current portal analytics)', engineering: 'React, GraphQL, Customer Data Platform' },
+    contacts: {
+      ux: [{ name: 'Emma Torres', role: 'Lead Designer' }],
+      engineering: [{ name: 'Navid Rahimi', role: 'Frontend' }, { name: 'Jordan Lee', role: 'API migration' }],
+      pm: [{ name: 'Taylor Kim', role: 'Customer Experience PM' }],
+      decisionMakers: [{ name: 'VP Customer Success', role: 'Business approver' }, { name: 'Taylor Kim', role: 'Day-to-day' }],
+    },
+  },
+  'Support ticket flow': {
+    overview: 'Redesign the support ticket creation and tracking experience — smart categorization, guided troubleshooting before submission, and real-time status updates.',
+    goal: 'Deflect 25% of tickets through guided self-help and reduce average ticket resolution time by 20%.',
+    metrics: ['Ticket deflection rate', 'Avg. resolution time', 'Customer satisfaction (CSAT)', 'First-response time'],
+    raid: [
+      { issue: 'AI categorization accuracy', desc: 'Proposed smart categorization model has 72% accuracy — below the 85% threshold for auto-routing.', severity: 'Medium', mitigation: 'Design human-confirmation step for low-confidence categorizations. Show top-3 suggested categories for user selection. Plan accuracy improvement roadmap.', logged: '2026-06-18', needed: '2026-07-05', resolved: '', owner: 'Emma Torres' },
+    ],
+    decisions: [
+      { name: 'Guided flow before ticket creation', desc: 'Users go through 2–3 troubleshooting steps with relevant help articles before reaching the ticket form.', artifacts: 'Figma: Support Flow Decision Tree, FigJam: Deflection Strategy', needed: '2026-06-12', resolved: '2026-06-14', owner: 'Emma Torres' },
+    ],
+    platforms: { design: 'Figma (flow + interaction specs)', research: 'Support ticket analysis (Zendesk data), customer interviews', engineering: 'React, Zendesk API, ML categorization service' },
+    contacts: {
+      ux: [{ name: 'Emma Torres', role: 'Lead Designer' }],
+      engineering: [{ name: 'Lin Wei', role: 'Backend' }, { name: 'Sam Torres', role: 'Frontend' }],
+      pm: [{ name: 'Taylor Kim', role: 'Customer Experience PM' }],
+      decisionMakers: [{ name: 'Head of Support', role: 'Approver' }],
+    },
+  },
+  'Billing page update': {
+    overview: 'Refresh the billing and subscription management page with clearer plan comparisons, usage visualization, and self-service upgrade/downgrade flows.',
+    goal: 'Reduce billing-related support tickets by 35% and increase self-service plan changes by 50%.',
+    metrics: ['Billing support tickets', 'Self-service plan change rate', 'Upgrade conversion', 'Page comprehension score'],
+    raid: [
+      { issue: 'Pricing model complexity', desc: 'Upcoming usage-based pricing adds complexity to the billing display.', severity: 'Low', mitigation: 'Design flexible billing display that supports both flat and usage-based models. Use progressive disclosure for complex details.', logged: '2026-06-24', needed: '2026-07-12', resolved: '', owner: 'Jordan Williams' },
+    ],
+    decisions: [
+      { name: 'Visual usage meter + invoice history', desc: 'Billing page leads with a visual usage meter and current period cost, with invoice history below.', artifacts: 'Figma: Billing Page Redesign, FigJam: Billing UX Audit', needed: '2026-06-18', resolved: '2026-06-20', owner: 'Jordan Williams' },
+    ],
+    platforms: { design: 'Figma (billing components)', research: 'Support ticket analysis, competitive audit (Stripe, Paddle)', engineering: 'React, Stripe Billing API' },
+    contacts: {
+      ux: [{ name: 'Jordan Williams', role: 'Lead Designer' }],
+      engineering: [{ name: 'Jordan Lee', role: 'Backend — Payments' }, { name: 'Sam Torres', role: 'Frontend' }],
+      pm: [{ name: 'Taylor Kim', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'VP Finance', role: 'Pricing approver' }, { name: 'Taylor Kim', role: 'UX approver' }],
+    },
+  },
+  'Payment history': {
+    overview: 'Design a comprehensive payment history view with transaction details, receipt downloads, filtering, and export capabilities for accounting teams.',
+    goal: 'Enable users to self-serve 90% of payment history inquiries and reduce finance team manual lookups by 60%.',
+    metrics: ['Self-service lookup rate', 'Finance team manual requests', 'Receipt download rate', 'Export usage'],
+    raid: [
+      { issue: 'Historical data migration', desc: 'Transactions older than 18 months are in legacy format and may display inconsistently.', severity: 'Low', mitigation: 'Design graceful fallback for legacy records with "limited detail" indicator. Document data gaps transparently.', logged: '2026-06-22', needed: '2026-07-08', resolved: '', owner: 'Jordan Williams' },
+    ],
+    decisions: [
+      { name: 'Searchable table with expandable rows', desc: 'Transactions in a filterable table; click to expand inline detail panel with receipt and line items.', artifacts: 'Figma: Payment History Table, FigJam: Transaction Detail Requirements', needed: '2026-06-16', resolved: '2026-06-18', owner: 'Jordan Williams' },
+    ],
+    platforms: { design: 'Figma (table + detail patterns)', research: 'User interviews (finance personas)', engineering: 'React, Stripe API, PDF generation service' },
+    contacts: {
+      ux: [{ name: 'Jordan Williams', role: 'Lead Designer' }],
+      engineering: [{ name: 'Jordan Lee', role: 'Backend — Payments' }],
+      pm: [{ name: 'Taylor Kim', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Taylor Kim', role: 'Approver' }],
+    },
+  },
+  'Error message review': {
+    overview: 'Comprehensive audit and rewrite of all user-facing error messages across the product — replacing technical jargon with actionable guidance and consistent tone.',
+    goal: 'Rewrite 100% of high-frequency error messages to be actionable, achieving a 90%+ comprehension score in user testing.',
+    metrics: ['Error comprehension score', 'Error-related support tickets', 'User recovery rate (from error)', 'Message consistency audit score'],
+    raid: [
+      { issue: 'Error catalog incomplete', desc: 'Engineering has not provided a complete list of error codes and their trigger conditions.', severity: 'Low', mitigation: 'Start with top-50 most frequent errors from analytics. Request full catalog from eng lead by Sprint 15.', logged: '2026-06-24', needed: '2026-07-10', resolved: '', owner: 'Lin Wei' },
+    ],
+    decisions: [
+      { name: 'Three-part error message structure', desc: 'Every error follows: What happened → Why → What to do next. No error codes shown to users by default.', artifacts: 'Figma: Error Message Component, Content guide: Error Writing Standards', needed: '2026-06-20', resolved: '2026-06-22', owner: 'Lin Wei' },
+    ],
+    platforms: { design: 'Figma (error state components)', research: 'Comprehension testing (UserTesting), analytics (error frequency data)', engineering: 'React (component library), i18n system' },
+    contacts: {
+      ux: [{ name: 'Lin Wei', role: 'Lead Designer — Content' }],
+      engineering: [{ name: 'Navid Rahimi', role: 'Frontend Lead' }],
+      pm: [{ name: 'Taylor Kim', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'Taylor Kim', role: 'Approver' }],
+    },
+  },
+  'Reporting dashboard': {
+    overview: 'Design an analytics reporting dashboard for business stakeholders — configurable reports, scheduled email digests, and exportable visualizations.',
+    goal: 'Replace 80% of manual report generation with self-service dashboards and reduce reporting prep time from 4 hours to 30 minutes.',
+    metrics: ['Self-service report generation rate', 'Reporting prep time', 'Scheduled report adoption', 'Export/share usage'],
+    raid: [
+      { issue: 'Data pipeline migration pending', desc: 'The data warehouse is migrating from Redshift to Snowflake. Report queries may need adaptation and some data may be temporarily unavailable.', severity: 'Medium', mitigation: 'Design data-unavailable states gracefully. Coordinate with data eng on migration timeline. Identify which reports are affected and prepare fallback data sources.', logged: '2026-06-16', needed: '2026-07-01', resolved: '', owner: 'Dana Kim' },
+      { issue: 'Chart rendering performance', desc: 'Complex multi-series charts with 12-month data may lag on lower-end machines.', severity: 'Low', mitigation: 'Design data aggregation controls (daily/weekly/monthly). Limit visible series to 5 with "show more" option.', logged: '2026-06-22', needed: '2026-07-10', resolved: '', owner: 'Dana Kim' },
+    ],
+    decisions: [
+      { name: 'Template-based report builder', desc: 'Users select from report templates and customize metrics/filters, rather than building from scratch.', artifacts: 'Figma: Report Builder Flow, FigJam: Reporting Needs Workshop', needed: '2026-06-10', resolved: '2026-06-12', owner: 'Dana Kim' },
+    ],
+    platforms: { design: 'Figma (chart components + report layouts)', research: 'Stakeholder interviews (8 sessions), current report usage analytics', engineering: 'React, D3.js, Snowflake, Scheduled jobs (Temporal)' },
+    contacts: {
+      ux: [{ name: 'Dana Kim', role: 'Lead Designer' }],
+      engineering: [{ name: 'Navid Rahimi', role: 'Frontend' }, { name: 'Lin Wei', role: 'Data Backend' }],
+      pm: [{ name: 'Rachel Hong', role: 'Analytics PM' }],
+      decisionMakers: [{ name: 'VP Operations', role: 'Business approver' }],
+    },
+  },
+  'Export templates': {
+    overview: 'Design reusable export templates for generating branded PDF reports, CSV data extracts, and formatted Excel workbooks from dashboard data.',
+    goal: 'Provide 8 pre-built export templates covering 90% of common export use cases, reducing custom export requests by 70%.',
+    metrics: ['Template usage rate', 'Custom export requests', 'Export completion rate', 'Template satisfaction score'],
+    raid: [
+      { issue: 'PDF rendering fidelity', desc: 'Chart visualizations render differently in PDF vs. web — color and font discrepancies.', severity: 'Low', mitigation: 'Design PDF-optimized chart variants. Test across PDF generators. Accept minor cosmetic differences with documentation.', logged: '2026-06-24', needed: '2026-07-12', resolved: '', owner: 'Dana Kim' },
+    ],
+    decisions: [
+      { name: 'Branded templates with customizable sections', desc: 'Each template includes company branding with user-selectable data sections and date ranges.', artifacts: 'Figma: Export Template Gallery, FigJam: Export Requirements Matrix', needed: '2026-06-18', resolved: '2026-06-20', owner: 'Dana Kim' },
+    ],
+    platforms: { design: 'Figma (print layouts + web preview)', research: 'User interviews (export power users)', engineering: 'Puppeteer (PDF), SheetJS (Excel), Node.js' },
+    contacts: {
+      ux: [{ name: 'Dana Kim', role: 'Lead Designer' }],
+      engineering: [{ name: 'Lin Wei', role: 'Backend' }],
+      pm: [{ name: 'Rachel Hong', role: 'Analytics PM' }],
+      decisionMakers: [{ name: 'Rachel Hong', role: 'Approver' }],
+    },
+  },
+  'Inventory management': {
+    overview: 'Design the inventory management interface for the e-commerce platform — real-time stock levels, low-stock alerts, bulk updates, and supplier integration views.',
+    goal: 'Reduce stockout incidents by 40% through better visibility and reduce manual inventory updates by 60% via bulk tooling.',
+    metrics: ['Stockout incidents', 'Manual update frequency', 'Inventory accuracy rate', 'Time to restock (from alert)'],
+    raid: [
+      { issue: 'Multi-warehouse complexity', desc: 'System supports 3 warehouses with different inventory schemas. Unified view requires data normalization.', severity: 'Medium', mitigation: 'Design warehouse selector with aggregated default view. Handle schema differences in display layer. Coordinate unified data model with eng.', logged: '2026-06-18', needed: '2026-07-05', resolved: '', owner: 'Ben Kowalski' },
+    ],
+    decisions: [
+      { name: 'Card grid with table toggle', desc: 'Inventory items shown as visual cards (with stock level bars) by default, with option to switch to dense table view.', artifacts: 'Figma: Inventory Views (Card + Table), FigJam: Inventory Workflow Audit', needed: '2026-06-14', resolved: '2026-06-16', owner: 'Ben Kowalski' },
+    ],
+    platforms: { design: 'Figma (responsive layouts + data-heavy patterns)', research: 'Warehouse manager interviews, contextual inquiry', engineering: 'React, WebSocket (real-time stock), ERP integration' },
+    contacts: {
+      ux: [{ name: 'Ben Kowalski', role: 'Lead Designer' }],
+      engineering: [{ name: 'Jordan Lee', role: 'Backend' }, { name: 'Sam Torres', role: 'Frontend' }],
+      pm: [{ name: 'Taylor Kim', role: 'E-commerce PM' }],
+      decisionMakers: [{ name: 'VP Operations', role: 'Business approver' }],
+    },
+  },
+  'Product catalog': {
+    overview: 'Design the product catalog management interface — product creation flows, variant management, media uploads, and SEO metadata editing for merchandising teams.',
+    goal: 'Reduce time to publish a new product from 45 minutes to 10 minutes and achieve 95% metadata completeness at launch.',
+    metrics: ['Time to publish', 'Metadata completeness', 'Publishing error rate', 'Catalog team satisfaction'],
+    raid: [
+      { issue: 'Image CDN integration', desc: 'New image processing CDN has different format requirements than current system.', severity: 'Low', mitigation: 'Design upload flow with format validation and auto-conversion messaging. Coordinate supported formats list with eng.', logged: '2026-06-22', needed: '2026-07-08', resolved: '', owner: 'Ben Kowalski' },
+    ],
+    decisions: [
+      { name: 'Guided creation wizard + quick-add mode', desc: 'Full wizard for new products (ensures completeness), quick-add form for experienced users adding similar items.', artifacts: 'Figma: Product Creation Flows, FigJam: Catalog Team Workflow Map', needed: '2026-06-16', resolved: '2026-06-18', owner: 'Ben Kowalski' },
+    ],
+    platforms: { design: 'Figma (form patterns + media management)', research: 'Merchandising team shadowing (3 sessions)', engineering: 'React, Cloudinary (media), PIM system integration' },
+    contacts: {
+      ux: [{ name: 'Ben Kowalski', role: 'Lead Designer' }],
+      engineering: [{ name: 'Chris Park', role: 'Frontend' }, { name: 'Lin Wei', role: 'Backend' }],
+      pm: [{ name: 'Taylor Kim', role: 'E-commerce PM' }],
+      decisionMakers: [{ name: 'Head of Merchandising', role: 'Business approver' }],
+    },
+  },
+  'Collaboration tools': {
+    overview: 'Design real-time collaboration features — shared workspaces, commenting, @mentions, presence indicators, and activity feeds for team coordination.',
+    goal: 'Increase in-app collaboration by 50% (reduce reliance on external tools like Slack for work-related discussions) and improve decision traceability.',
+    metrics: ['In-app comment volume', 'External tool message reduction', 'Decision traceability (linked comments)', 'Feature adoption rate'],
+    raid: [
+      { issue: 'Engineering team reassigned to incident', desc: 'The primary frontend engineer supporting this project was reassigned to a P0 production incident. Unclear when they will return.', severity: 'Medium', mitigation: 'Continue design work independently. Prepare detailed specs for async handoff. Request backup engineer allocation from eng manager. Identify non-blocked deliverables.', logged: '2026-06-22', needed: '2026-07-01', resolved: '', owner: 'Rachel Hong' },
+      { issue: 'Real-time sync conflicts', desc: 'Simultaneous edits to shared content may cause merge conflicts in the collaboration model.', severity: 'Medium', mitigation: 'Design optimistic UI with conflict resolution patterns. Show presence cursors to reduce collision. Implement last-write-wins with undo for simple cases.', logged: '2026-06-18', needed: '2026-07-08', resolved: '', owner: 'Rachel Hong' },
+    ],
+    decisions: [
+      { name: 'Contextual comments over separate discussion tab', desc: 'Comments attached to specific elements/sections rather than in a separate discussion panel.', artifacts: 'Figma: Comment Interaction Patterns, FigJam: Collaboration Feature Map', needed: '2026-06-12', resolved: '2026-06-14', owner: 'Rachel Hong' },
+    ],
+    platforms: { design: 'Figma (real-time interaction patterns)', research: 'Team workflow interviews, collaboration tool audit', engineering: 'React, WebSocket, CRDT (Yjs), PostgreSQL' },
+    contacts: {
+      ux: [{ name: 'Rachel Hong', role: 'Lead Designer' }],
+      engineering: [{ name: 'Navid Rahimi', role: 'Frontend Lead' }, { name: 'Jordan Lee', role: 'Real-time Backend' }],
+      pm: [{ name: 'Rachel Hong', role: 'Product Manager' }],
+      decisionMakers: [{ name: 'CPO', role: 'Strategic approver' }],
+    },
+  },
+  'Help center redesign': {
+    overview: 'Redesign the help center with improved search, contextual help suggestions, video tutorials, and a modern knowledge base layout that reduces support ticket volume.',
+    goal: 'Increase help center self-service resolution to 65% and reduce support tickets by 25% within 3 months of launch.',
+    metrics: ['Self-service resolution rate', 'Support ticket reduction', 'Search success rate', 'Article helpfulness score'],
+    raid: [
+      { issue: 'Content migration volume', desc: '400+ help articles need review and migration from legacy CMS to new platform.', severity: 'Low', mitigation: 'Design for progressive migration — new and high-traffic articles first. Old articles accessible via redirect. Budget content review with technical writing team.', logged: '2026-06-20', needed: '2026-07-15', resolved: '', owner: 'Ryan O\'Brien' },
+    ],
+    decisions: [
+      { name: 'AI-suggested articles in context', desc: 'Help center surfaces contextually relevant articles based on user\'s current page and recent actions.', artifacts: 'Figma: Contextual Help Widget, FigJam: Help Center IA Restructure', needed: '2026-06-14', resolved: '2026-06-16', owner: 'Ryan O\'Brien' },
+    ],
+    platforms: { design: 'Figma (knowledge base templates + search UX)', research: 'Support ticket topic analysis, search query logs', engineering: 'Next.js, Algolia (search), Contentful (CMS)' },
+    contacts: {
+      ux: [{ name: 'Ryan O\'Brien', role: 'Lead Designer' }],
+      engineering: [{ name: 'Chris Park', role: 'Frontend' }],
+      pm: [{ name: 'Taylor Kim', role: 'Customer Experience PM' }],
+      decisionMakers: [{ name: 'Head of Support', role: 'Approver' }],
+    },
+  },
+  'Data visualization': {
+    overview: 'Establish a comprehensive data visualization design language — chart type guidelines, color scales for data, interaction patterns for drill-down, and responsive chart behavior.',
+    goal: 'Create a reusable chart component library adopted by all product dashboards within 2 sprints, reducing custom chart implementations by 80%.',
+    metrics: ['Chart library adoption', 'Custom chart reduction', 'Data comprehension scores', 'Chart accessibility compliance'],
+    raid: [
+      { issue: 'Color accessibility for data series', desc: 'Current palette relies on hue alone to differentiate data series — fails for colorblind users.', severity: 'Medium', mitigation: 'Design pattern/texture fills as secondary differentiator. Test with Sim Daltonism. Provide high-contrast mode option.', logged: '2026-06-20', needed: '2026-07-05', resolved: '', owner: 'Sara Müller' },
+      { issue: 'Chart library performance at scale', desc: 'Rendering 10,000+ data points causes frame drops on mid-range devices.', severity: 'Low', mitigation: 'Design data aggregation patterns for large datasets. Implement canvas rendering fallback for high-volume charts.', logged: '2026-06-24', needed: '2026-07-12', resolved: '', owner: 'Sara Müller' },
+    ],
+    decisions: [
+      { name: 'D3.js-based component library', desc: 'Standardize on D3.js wrapped in React components for all product charts, replacing mixed Recharts/Chart.js usage.', artifacts: 'Figma: Chart Component Specs, FigJam: Data Viz Audit & Standards', needed: '2026-06-16', resolved: '2026-06-18', owner: 'Sara Müller' },
+    ],
+    platforms: { design: 'Figma (chart component library + usage guidelines)', research: 'Data comprehension testing, accessibility audit', engineering: 'React, D3.js, Canvas API (fallback), Storybook' },
+    contacts: {
+      ux: [{ name: 'Sara Müller', role: 'Lead Designer' }],
+      engineering: [{ name: 'Dana Kim', role: 'Data Viz Engineer' }, { name: 'Navid Rahimi', role: 'Frontend Architect' }],
+      pm: [{ name: 'Rachel Hong', role: 'Analytics PM' }],
+      decisionMakers: [{ name: 'Head of Design', role: 'System governance' }],
     },
   },
 };
